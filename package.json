@@ -13,7 +13,8 @@
     "lint:html": "htmlhint ./**/*.html",
     "lint:css": "stylelint ./**/*.css",
     "lint:js": "eslint ./**/*.js",
-    "test": "mocha -r babel-register test/ -w -R min",
+    "test": "mocha -r babel-register test/ -R min",
+    "tdd": "mocha -r babel-register test/ -w -R min",
     "precommit": "npm test"
   },
   "repository": {

@@ -1,8 +1,9 @@
 import React from 'react'
+import Chatbox from './chatbox'
 
 const App = () => {
   return (
-    <h1>Hello World</h1>
+    <Chatbox />
   )
 }
 

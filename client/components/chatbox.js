@@ -20,7 +20,7 @@ class Chat extends Component {
     const data = new FormData(event.target)
     store.dispatch({
       type: 'SEND_MESSAGE',
-      payload: { messages: data.get('message') }
+      payload: { message: data.get('message') }
     })
     this.setState({ value: '' })
   }
@@ -28,6 +28,13 @@ class Chat extends Component {
   render() {
     return (
       <div>
+        <div>
+          {
+            this.props.messages.map((message, i) => {
+              return <p key={i}>User: {message}</p>
+            })
+          }
+        </div>
         <form onSubmit={ this.sendMessage }>
           <input
             type='text'

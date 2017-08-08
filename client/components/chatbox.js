@@ -21,6 +21,13 @@ const Button = styled.button`
   margin: 5px;
 `
 
+socket.on('chat message', message => {
+  store.dispatch({
+    type: 'SEND_MESSAGE',
+    payload: { message }
+  })
+})
+
 class Chat extends Component {
   constructor(props) {
     super(props)
@@ -37,14 +44,9 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    const message = data.get('message')
-    store.dispatch({
-      type: 'SEND_MESSAGE',
-      payload: { message }
-    })
-    socket.emit('chat message', message)
-    const messageContainer = document.querySelector('.message-container')
-    messageContainer.scrollTop = messageContainer.scrollHeight
+    socket.emit('chat message', data.get('message'))
+    // const messageContainer = document.querySelector('.message-container')
+    // messageContainer.scrollTop = messageContainer.scrollHeight
     this.setState({ value: '' })
   }
 

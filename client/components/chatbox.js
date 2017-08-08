@@ -1,11 +1,10 @@
-/* global io */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from '../store'
 import styled from 'styled-components'
+import io from 'socket.io-client'
 
-const socket = io()
+const socket = io('http://localhost/api/connect')
 
 const Panel = styled.div`
   margin-top: 20px;
@@ -14,18 +13,19 @@ const Panel = styled.div`
 const PanelBody = styled.div`
   height: 200px;
   overflow: auto;
-  padding-bottom: 35px;
 `
 
 const Button = styled.button`
   margin: 5px;
 `
 
-socket.on('chat message', message => {
+socket.on('chat-message', message => {
   store.dispatch({
     type: 'SEND_MESSAGE',
     payload: { message }
   })
+  const messageContainer = document.querySelector('.message-container')
+  messageContainer.scrollTop = messageContainer.scrollHeight
 })
 
 class Chat extends Component {
@@ -44,9 +44,7 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    socket.emit('chat message', data.get('message'))
-    // const messageContainer = document.querySelector('.message-container')
-    // messageContainer.scrollTop = messageContainer.scrollHeight
+    socket.emit('chat-message', data.get('message'))
     this.setState({ value: '' })
   }
 

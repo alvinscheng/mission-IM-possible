@@ -5,10 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "bundle": "browserify -t babelify client/index.js -o server/public/bundle.js",
-    "watch:client": "watchify -vd -t babelify client/index.js -o server/public/bundle.js",
-    "watch:server": "nodemon server/index.js --ignore server/public/**",
-    "watch": "run-p watch:client watch:server",
+    "bundle": "browserify -t babelify client/index.js -o public/bundle.js",
+    "watch": "watchify -vd -t babelify client/index.js -o public/bundle.js",
     "lint": "run-p lint:*",
     "lint:html": "htmlhint ./**/*.html",
     "lint:css": "stylelint ./**/*.css",

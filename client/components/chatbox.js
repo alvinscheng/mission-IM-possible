@@ -1,7 +1,11 @@
+/* global io */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from '../store'
 import styled from 'styled-components'
+
+const socket = io()
 
 const Panel = styled.div`
   margin-top: 20px;
@@ -33,10 +37,12 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
+    const message = data.get('message')
     store.dispatch({
       type: 'SEND_MESSAGE',
-      payload: { message: data.get('message') }
+      payload: { message }
     })
+    socket.emit('chat message', message)
     const messageContainer = document.querySelector('.message-container')
     messageContainer.scrollTop = messageContainer.scrollHeight
     this.setState({ value: '' })

@@ -4,7 +4,9 @@ import store from '../store'
 import styled from 'styled-components'
 import io from 'socket.io-client'
 
-const socket = io('http://localhost/api/connect')
+const socket = io('https://stark-meadow-83882.herokuapp.com', {
+  path: '/api/connect'
+})
 
 const Panel = styled.div`
   margin-top: 20px;

@@ -2,7 +2,7 @@
   "name": "mission-IM-possible",
   "version": "1.0.0",
   "description": "A desktop app for socializers to message friends.",
-  "main": "index.js",
+  "main": "public/main.js",
   "scripts": {
     "start": "electron .",
     "bundle": "browserify -t babelify client/index.js -o public/bundle.js",

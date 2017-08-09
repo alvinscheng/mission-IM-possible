@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import store from '../store'
 import styled from 'styled-components'
 import io from 'socket.io-client'
 
@@ -23,21 +22,23 @@ const MessageInput = styled.div`
   width: calc(100% - 200px);
 `
 
-socket.on('chat-message', message => {
-  store.dispatch({
-    type: 'SEND_MESSAGE',
-    payload: { message }
-  })
-  const messageContainer = document.querySelector('.message-container')
-  messageContainer.scrollTop = messageContainer.scrollHeight
-})
-
 class Chat extends Component {
   constructor(props) {
     super(props)
     this.state = { value: '' }
     this.sendMessage = this.sendMessage.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    socket.on('chat-message', message => {
+      this.props.dispatch({
+        type: 'SEND_MESSAGE',
+        payload: { message }
+      })
+      const messageContainer = document.querySelector('.message-container')
+      messageContainer.scrollTop = messageContainer.scrollHeight
+    })
   }
 
   handleChange(event) {

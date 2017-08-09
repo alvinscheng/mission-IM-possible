@@ -9,6 +9,8 @@ const socket = io('https://stark-meadow-83882.herokuapp.com', {
 })
 
 const MessageBody = styled.div`
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   overflow: auto;
   padding: 10px 30px;
   height: calc(100vh - 50px);

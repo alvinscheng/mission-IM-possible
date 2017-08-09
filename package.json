@@ -11,6 +11,7 @@
     "lint:html": "htmlhint ./**/*.html",
     "lint:css": "stylelint ./**/*.css",
     "lint:js": "eslint ./**/*.js",
+    "nyc": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "test": "mocha -r babel-register test/ -R min",
     "tdd": "mocha -r babel-register test/ -w -R min",
     "precommit": "npm test"
@@ -44,16 +45,13 @@
     "htmlhint": "0.9.13",
     "husky": "0.13.4",
     "mocha": "^3.5.0",
-    "nodemon": "^1.11.0",
     "npm-run-all": "4.0.2",
-    "request": "^2.81.0",
+    "nyc": "^11.1.0",
     "stylelint": "7.10.1",
     "stylelint-config-standard": "16.0.0",
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "dotenv": "^4.0.0",
-    "express": "^4.15.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",

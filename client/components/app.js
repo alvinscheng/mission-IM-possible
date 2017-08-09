@@ -6,6 +6,7 @@ const App = () => {
     <div className='window'>
       <div className='window-content'>
         <div className='pane-group'>
+          <div className='pane-sm sidebar'></div>
           <div className='pane'>
             <Chatbox />
           </div>

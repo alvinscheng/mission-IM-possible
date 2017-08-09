@@ -8,17 +8,17 @@ const socket = io('https://stark-meadow-83882.herokuapp.com', {
   path: '/api/connect'
 })
 
-const Panel = styled.div`
-  margin-top: 20px;
-`
-
-const PanelBody = styled.div`
-  height: 200px;
+const MessageBody = styled.div`
   overflow: auto;
+  padding: 10px 30px;
+  height: calc(100vh - 50px);
 `
 
-const Button = styled.button`
-  margin: 5px;
+const MessageInput = styled.div`
+  position: fixed;
+  margin: 20px;
+  bottom: 0;
+  width: 100%;
 `
 
 socket.on('chat-message', message => {
@@ -52,15 +52,15 @@ class Chat extends Component {
 
   render() {
     return (
-      <Panel className='panel panel-default'>
-        <PanelBody className='panel-body message-container'>
+      <div>
+        <MessageBody className='message-container'>
           {
             this.props.messages.map((message, i) => {
               return <p key={i}>User: {message}</p>
             })
           }
-        </PanelBody>
-        <div className='panel-footer'>
+        </MessageBody>
+        <MessageInput>
           <form className='form-inline text-center' onSubmit={ this.sendMessage }>
             <input
               type='text'
@@ -68,10 +68,9 @@ class Chat extends Component {
               className='form-control'
               onChange={ this.handleChange }
               value={ this.state.value }/>
-            <Button className='btn btn-success btn-sm' type='submit'>Send</Button>
           </form>
-        </div>
-      </Panel>
+        </MessageInput>
+      </div>
     )
   }
 }

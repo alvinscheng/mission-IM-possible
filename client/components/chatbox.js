@@ -20,7 +20,7 @@ const MessageInput = styled.div`
   position: fixed;
   margin: 20px;
   bottom: 0;
-  width: 100%;
+  width: calc(100% - 200px);
 `
 
 socket.on('chat-message', message => {

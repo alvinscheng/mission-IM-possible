@@ -12,7 +12,7 @@ const SignupForm = () => {
         })
         .then(res => res.json())
         .then(token => {
-          console.log(token)
+          localStorage.setItem('jwtToken', token)
         })
         .catch(err => {
           console.log(err)

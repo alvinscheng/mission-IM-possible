@@ -4,8 +4,19 @@ import { Form, Text } from 'react-form'
 const SignupForm = () => {
   return (
     <Form
-      onSubmit={(values) => {
-        console.log('Success!', values)
+      onSubmit={data => {
+        fetch('http://localhost:3000/register', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(token => {
+          console.log(token)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }}
       validate={({ username, password }) => {
         return {

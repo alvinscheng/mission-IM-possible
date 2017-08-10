@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
 
+const formMargin = { margin: '20px' }
+
 const SignupForm = () => {
   return (
     <Form
@@ -31,7 +33,7 @@ const SignupForm = () => {
     >
       {({submitForm}) => {
         return (
-          <form onSubmit={submitForm}>
+          <form style={ formMargin } onSubmit={submitForm}>
             <label>
               <span>Username:</span>
               <Text

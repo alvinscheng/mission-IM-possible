@@ -1,14 +1,28 @@
 import reducer from '../client/reducer'
-const { describe, it } = require('mocha')
-const { expect } = require('chai')
+import { describe, it, before, after } from 'mocha'
+import { expect } from 'chai'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { mount } from 'enzyme'
+import { JSDOM } from 'jsdom'
+import configureStore from 'redux-mock-store'
+import Chatbox from '../client/components/chatbox'
+import Welcome from '../client/components/welcome'
 
 describe('reducer', () => {
 
-  describe('SEND_MESSAGE', () => {
+  describe('SENT_MESSAGE', () => {
     it('changes the language', () => {
-      const oldState = { messages: [], isLoggedIn: false }
+      const oldState = {
+        messages: [],
+        isLoggedIn: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        }
+      }
       const action = {
-        type: 'SEND_MESSAGE',
+        type: 'SENT_MESSAGE',
         payload: {
           message: 'Hello World'
         }
@@ -18,22 +32,106 @@ describe('reducer', () => {
     })
   })
 
-  describe('LOG_IN', () => {
+  describe('LOGGED_IN', () => {
     it('Logs in a user', () => {
-      const oldState = { messages: [], isLoggedIn: false }
-      const action = { type: 'LOG_IN' }
+      const oldState = {
+        messages: ['Hello', 'World'],
+        isLoggedIn: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        }
+      }
+      const action = {
+        type: 'LOGGED_IN',
+        payload: {
+          username: 'username',
+          token: 'TOKEN'
+        }
+      }
       const newState = reducer(oldState, action)
-      expect(newState.isLoggedIn).to.equal(true)
+      expect(newState.isLoggedIn).to.be.an('object')
+      expect(newState.isLoggedIn.isLoggedIn).to.equal(true)
+      expect(newState.isLoggedIn.username).to.equal('username')
+      expect(newState.isLoggedIn.token).to.equal('TOKEN')
     })
   })
 
   describe('DEFAULT', () => {
     it('defaults', () => {
-      const oldState = { messages: ['Hello', 'World'], isLoggedIn: false }
+      const oldState = {
+        messages: ['Hello', 'World'],
+        isLoggedIn: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        }
+      }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)
       expect(newState).to.deep.equal(oldState)
     })
+  })
+
+})
+
+describe('React Components', () => {
+
+  const mockStore = configureStore(reducer)
+  const oldState = {
+    messages: [],
+    isLoggedIn: {
+      username: '',
+      token: '',
+      isLoggedIn: false
+    }
+  }
+  const store = mockStore(oldState)
+
+  describe('<Chatbox />', () => {
+
+    before(() => {
+      global.window = new JSDOM().window
+      global.document = window.document
+    })
+
+    after(() => {
+      global.document = undefined
+      global.window = undefined
+    })
+
+    it('should render a .message-container', () => {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <Chatbox />
+        </Provider>
+      )
+      expect(wrapper.find('.message-container')).to.have.length(1)
+    })
+
+  })
+
+  describe('<Welcome />', () => {
+
+    before(() => {
+      global.window = new JSDOM().window
+      global.document = window.document
+    })
+
+    after(() => {
+      global.document = undefined
+      global.window = undefined
+    })
+
+    it('does something', () => {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <Welcome />
+        </Provider>
+      )
+      expect(wrapper.find('h5')).to.have.length(1)
+    })
+
   })
 
 })

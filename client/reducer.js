@@ -7,7 +7,7 @@ function messages(state = [], action) {
   }
 }
 
-function isLoggedIn(state = { username: '', token: '', isLoggedIn: false }, action) {
+function user(state = { username: '', token: '', isLoggedIn: false }, action) {
   switch (action.type) {
     case 'LOGGED_IN':
       return { username: action.payload.username, token: action.payload.token, isLoggedIn: true }
@@ -16,9 +16,17 @@ function isLoggedIn(state = { username: '', token: '', isLoggedIn: false }, acti
   }
 }
 
+function chatInput(state = '', action) {
+  switch (action.type) {
+    case 'TYPED_MESSAGE': return action.payload.message
+    default: return state
+  }
+}
+
 const reducer = combineReducers({
   messages: messages,
-  isLoggedIn: isLoggedIn
+  user: user,
+  chatInput: chatInput
 })
 
 export default reducer

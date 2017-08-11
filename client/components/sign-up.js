@@ -13,8 +13,8 @@ const SignupForm = () => {
         })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('jwtToken', data.token)
-          localStorage.setItem('username', data.username)
+          localStorage.setItem('mission-IM-possible-jwtToken', data.token)
+          localStorage.setItem('mission-IM-possible-username', data.username)
           store.dispatch({
             type: 'LOGGED_IN',
             payload: {
@@ -41,7 +41,7 @@ const SignupForm = () => {
     >
       {({submitForm}) => {
         return (
-          <form onSubmit={submitForm}>
+          <form onSubmit={ submitForm }>
             <label>
               <span>Username:</span>
               <Text

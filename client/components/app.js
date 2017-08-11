@@ -7,11 +7,6 @@ import Welcome from './welcome'
 const margin = { margin: '20px' }
 
 class Main extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { value: '' }
-  }
-
   render() {
     return (
       <div className='window'>
@@ -19,7 +14,7 @@ class Main extends Component {
           <div className='pane-group'>
             <div className='pane-sm sidebar'>
               <div style={ margin }>
-                {(!this.props.isLoggedIn.isLoggedIn) ? <SignupForm /> : <Welcome />}
+                {(!this.props.user.isLoggedIn) ? <SignupForm /> : <Welcome />}
               </div>
             </div>
             <div className='pane'>
@@ -34,7 +29,7 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.isLoggedIn
+    user: state.user
   }
 }
 

@@ -15,7 +15,7 @@ describe('reducer', () => {
     it('changes the language', () => {
       const oldState = {
         messages: [],
-        isLoggedIn: {
+        user: {
           username: '',
           token: '',
           isLoggedIn: false
@@ -36,7 +36,7 @@ describe('reducer', () => {
     it('Logs in a user', () => {
       const oldState = {
         messages: ['Hello', 'World'],
-        isLoggedIn: {
+        user: {
           username: '',
           token: '',
           isLoggedIn: false
@@ -50,10 +50,10 @@ describe('reducer', () => {
         }
       }
       const newState = reducer(oldState, action)
-      expect(newState.isLoggedIn).to.be.an('object')
-      expect(newState.isLoggedIn.isLoggedIn).to.equal(true)
-      expect(newState.isLoggedIn.username).to.equal('username')
-      expect(newState.isLoggedIn.token).to.equal('TOKEN')
+      expect(newState.user).to.be.an('object')
+      expect(newState.user.isLoggedIn).to.equal(true)
+      expect(newState.user.username).to.equal('username')
+      expect(newState.user.token).to.equal('TOKEN')
     })
   })
 
@@ -61,7 +61,7 @@ describe('reducer', () => {
     it('defaults', () => {
       const oldState = {
         messages: ['Hello', 'World'],
-        isLoggedIn: {
+        user: {
           username: '',
           token: '',
           isLoggedIn: false
@@ -80,7 +80,7 @@ describe('React Components', () => {
   const mockStore = configureStore(reducer)
   const oldState = {
     messages: [],
-    isLoggedIn: {
+    user: {
       username: '',
       token: '',
       isLoggedIn: false
@@ -107,6 +107,10 @@ describe('React Components', () => {
         </Provider>
       )
       expect(wrapper.find('.message-container')).to.have.length(1)
+    })
+
+    it('', () => {
+
     })
 
   })

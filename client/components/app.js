@@ -1,27 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Chatbox from './chatbox'
 import SignupForm from './sign-up'
 import Welcome from './welcome'
 
 const margin = { margin: '20px' }
 
-const App = () => {
-  return (
-    <div className='window'>
-      <div className='window-content'>
-        <div className='pane-group'>
-          <div className='pane-sm sidebar'>
-            <div style={ margin }>
-              {(localStorage.getItem('username') === 'undefined') ? <SignupForm /> : <Welcome />}
+class Main extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { value: '' }
+  }
+
+  render() {
+    return (
+      <div className='window'>
+        <div className='window-content'>
+          <div className='pane-group'>
+            <div className='pane-sm sidebar'>
+              <div style={ margin }>
+                {(!this.props.isLoggedIn) ? <SignupForm /> : <Welcome />}
+              </div>
             </div>
-          </div>
-          <div className='pane'>
-            <Chatbox />
+            <div className='pane'>
+              <Chatbox />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn
+  }
+}
+
+const App = connect(mapStateToProps)(Main)
 
 export default App

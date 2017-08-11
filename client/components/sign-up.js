@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
+import store from '../store'
 
 const SignupForm = () => {
   return (
@@ -14,6 +15,7 @@ const SignupForm = () => {
         .then(data => {
           localStorage.setItem('jwtToken', data.token)
           localStorage.setItem('username', data.username)
+          store.dispatch({ type: 'SIGN_UP' })
         })
         .catch(err => {
           console.log(err)

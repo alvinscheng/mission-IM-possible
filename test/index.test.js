@@ -1,13 +1,6 @@
 import reducer from '../client/reducer'
-import { describe, it, before, after } from 'mocha'
+import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import React from 'react'
-import { Provider } from 'react-redux'
-import { mount } from 'enzyme'
-import { JSDOM } from 'jsdom'
-import configureStore from 'redux-mock-store'
-import Chatbox from '../client/components/chatbox'
-import Welcome from '../client/components/welcome'
 
 describe('reducer', () => {
 
@@ -35,7 +28,7 @@ describe('reducer', () => {
   describe('LOGGED_IN', () => {
     it('Logs in a user', () => {
       const oldState = {
-        messages: ['Hello', 'World'],
+        messages: [],
         user: {
           username: '',
           token: '',
@@ -60,82 +53,18 @@ describe('reducer', () => {
   describe('DEFAULT', () => {
     it('defaults', () => {
       const oldState = {
-        messages: ['Hello', 'World'],
+        messages: [],
         user: {
           username: '',
           token: '',
           isLoggedIn: false
-        }
+        },
+        chatInput: ''
       }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)
       expect(newState).to.deep.equal(oldState)
     })
-  })
-
-})
-
-describe('React Components', () => {
-
-  const mockStore = configureStore(reducer)
-  const oldState = {
-    messages: [],
-    user: {
-      username: '',
-      token: '',
-      isLoggedIn: false
-    }
-  }
-  const store = mockStore(oldState)
-
-  describe('<Chatbox />', () => {
-
-    before(() => {
-      global.window = new JSDOM().window
-      global.document = window.document
-    })
-
-    after(() => {
-      global.document = undefined
-      global.window = undefined
-    })
-
-    it('should render a .message-container', () => {
-      const wrapper = mount(
-        <Provider store={ store }>
-          <Chatbox />
-        </Provider>
-      )
-      expect(wrapper.find('.message-container')).to.have.length(1)
-    })
-
-    it('', () => {
-
-    })
-
-  })
-
-  describe('<Welcome />', () => {
-
-    before(() => {
-      global.window = new JSDOM().window
-      global.document = window.document
-    })
-
-    after(() => {
-      global.document = undefined
-      global.window = undefined
-    })
-
-    it('does something', () => {
-      const wrapper = mount(
-        <Provider store={ store }>
-          <Welcome />
-        </Provider>
-      )
-      expect(wrapper.find('h5')).to.have.length(1)
-    })
-
   })
 
 })

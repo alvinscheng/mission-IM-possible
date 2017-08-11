@@ -80,7 +80,7 @@ class Chat extends Component {
 
 const mapStateToProps = state => {
   return {
-    messages: state
+    messages: state.messages
   }
 }
 

@@ -6,7 +6,7 @@ describe('reducer', () => {
 
   describe('SEND_MESSAGE', () => {
     it('changes the language', () => {
-      const oldState = []
+      const oldState = { messages: [], isLoggedIn: false }
       const action = {
         type: 'SEND_MESSAGE',
         payload: {
@@ -14,13 +14,13 @@ describe('reducer', () => {
         }
       }
       const newState = reducer(oldState, action)
-      expect(newState).to.be.an('array')
+      expect(newState.messages).to.be.an('array').with.length.above(0)
     })
   })
 
   describe('DEFAULT', () => {
     it('defaults', () => {
-      const oldState = ['Hello', 'World']
+      const oldState = { messages: ['Hello', 'World'], isLoggedIn: false }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)
       expect(newState).to.deep.equal(oldState)

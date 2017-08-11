@@ -1,8 +1,6 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
 
-const formMargin = { margin: '20px' }
-
 const SignupForm = () => {
   return (
     <Form
@@ -19,6 +17,7 @@ const SignupForm = () => {
         })
         .catch(err => {
           console.log(err)
+          alert('Username already taken.')
         })
       }}
       validate={({ username, password }) => {
@@ -34,7 +33,7 @@ const SignupForm = () => {
     >
       {({submitForm}) => {
         return (
-          <form style={ formMargin } onSubmit={submitForm}>
+          <form onSubmit={submitForm}>
             <label>
               <span>Username:</span>
               <Text

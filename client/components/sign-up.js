@@ -15,7 +15,7 @@ const SignupForm = () => {
         .then(data => {
           localStorage.setItem('jwtToken', data.token)
           localStorage.setItem('username', data.username)
-          store.dispatch({ type: 'SIGN_UP' })
+          store.dispatch({ type: 'LOG_IN' })
         })
         .catch(err => {
           console.log(err)

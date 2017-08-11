@@ -9,7 +9,7 @@ function messages(state = [], action) {
 
 function isLoggedIn(state = false, action) {
   switch (action.type) {
-    case 'SIGN_UP':
+    case 'LOG_IN':
       return true
     default:
       return state

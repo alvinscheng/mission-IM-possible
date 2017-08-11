@@ -18,6 +18,15 @@ describe('reducer', () => {
     })
   })
 
+  describe('LOG_IN', () => {
+    it('Logs in a user', () => {
+      const oldState = { messages: [], isLoggedIn: false }
+      const action = { type: 'LOG_IN' }
+      const newState = reducer(oldState, action)
+      expect(newState.isLoggedIn).to.equal(true)
+    })
+  })
+
   describe('DEFAULT', () => {
     it('defaults', () => {
       const oldState = { messages: ['Hello', 'World'], isLoggedIn: false }

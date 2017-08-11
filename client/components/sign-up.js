@@ -6,7 +6,7 @@ const SignupForm = () => {
   return (
     <Form
       onSubmit={data => {
-        fetch('http://localhost:3000/register', {
+        fetch('https://stark-meadow-83882.herokuapp.com/register', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
@@ -15,7 +15,13 @@ const SignupForm = () => {
         .then(data => {
           localStorage.setItem('jwtToken', data.token)
           localStorage.setItem('username', data.username)
-          store.dispatch({ type: 'LOG_IN' })
+          store.dispatch({
+            type: 'LOGGED_IN',
+            payload: {
+              username: data.username,
+              token: data.token
+            }
+          })
         })
         .catch(err => {
           console.log(err)
@@ -27,7 +33,7 @@ const SignupForm = () => {
           username: !username ? 'A username is required' : null,
           password: (!password || password.length < 6)
           ? 'A password of 6 or more characters is required'
-          : (!password.match(/(?=.*\d)(?=.*[a-z])/))
+          : (!password.match(/(?=.*\d)(?=.*[a-zA-Z])/))
             ? 'Password must include at least 1 letter and 1 number'
             : null
         }

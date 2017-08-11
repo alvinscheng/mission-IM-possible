@@ -33,7 +33,7 @@ class Chat extends Component {
   componentDidMount() {
     socket.on('chat-message', message => {
       this.props.dispatch({
-        type: 'SEND_MESSAGE',
+        type: 'SENT_MESSAGE',
         payload: { message }
       })
       const messageContainer = document.querySelector('.message-container')

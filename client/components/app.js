@@ -12,10 +12,6 @@ class Main extends Component {
     this.state = { value: '' }
   }
 
-  componentDidMount() {
-    if (localStorage.getItem('jwtToken')) this.props.dispatch({ type: 'LOG_IN' })
-  }
-
   render() {
     return (
       <div className='window'>
@@ -23,7 +19,7 @@ class Main extends Component {
           <div className='pane-group'>
             <div className='pane-sm sidebar'>
               <div style={ margin }>
-                {(!this.props.isLoggedIn) ? <SignupForm /> : <Welcome />}
+                {(!this.props.isLoggedIn.isLoggedIn) ? <SignupForm /> : <Welcome />}
               </div>
             </div>
             <div className='pane'>

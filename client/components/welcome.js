@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-const Welcome = () => {
-  return (
-    <h5>{ localStorage.getItem('username') }</h5>
-  )
+class Intro extends Component {
+  render() {
+    return (
+      <h5>{ this.props.isLoggedIn.username }</h5>
+    )
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn
+  }
+}
+
+const Welcome = connect(mapStateToProps)(Intro)
 
 export default Welcome

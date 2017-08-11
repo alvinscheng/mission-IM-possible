@@ -13,8 +13,9 @@ const SignupForm = () => {
           headers: { 'Content-Type': 'application/json' }
         })
         .then(res => res.json())
-        .then(token => {
-          localStorage.setItem('jwtToken', token)
+        .then(data => {
+          localStorage.setItem('jwtToken', data.token)
+          localStorage.setItem('username', data.username)
         })
         .catch(err => {
           console.log(err)

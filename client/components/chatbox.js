@@ -59,7 +59,7 @@ class Chat extends Component {
         <MessageBody className='message-container'>
           {
             this.props.messages.map((message, i) => {
-              return <p key={i}>User: {message}</p>
+              return <p key={i}>{ localStorage.getItem('username') }: {message}</p>
             })
           }
         </MessageBody>

@@ -12,6 +12,10 @@ class Main extends Component {
     this.state = { value: '' }
   }
 
+  componentDidMount() {
+    if (localStorage.getItem('jwtToken')) this.props.dispatch({ type: 'LOG_IN' })
+  }
+
   render() {
     return (
       <div className='window'>

@@ -35,4 +35,5 @@ describe('reducer', () => {
       expect(newState).to.deep.equal(oldState)
     })
   })
+
 })

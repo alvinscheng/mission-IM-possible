@@ -5,7 +5,7 @@ import { expect } from 'chai'
 describe('reducer', () => {
 
   describe('SENT_MESSAGE', () => {
-    it('changes the language', () => {
+    it('Adds a new message to the chat', () => {
       const oldState = {
         messages: [],
         user: {
@@ -17,7 +17,8 @@ describe('reducer', () => {
       const action = {
         type: 'SENT_MESSAGE',
         payload: {
-          message: 'Hello World'
+          message: 'Hello World',
+          username: 'user1'
         }
       }
       const newState = reducer(oldState, action)
@@ -26,7 +27,7 @@ describe('reducer', () => {
   })
 
   describe('TYPED_MESSAGE', () => {
-    it('changes the language', () => {
+    it('updates the chat input', () => {
       const oldState = {
         messages: [],
         user: {
@@ -49,7 +50,7 @@ describe('reducer', () => {
   })
 
   describe('LOGGED_IN', () => {
-    it('Logs in a user', () => {
+    it('logs in a user', () => {
       const oldState = {
         messages: [],
         user: {

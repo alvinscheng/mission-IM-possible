@@ -2,8 +2,10 @@ import { combineReducers } from 'redux'
 
 function messages(state = [], action) {
   switch (action.type) {
-    case 'SENT_MESSAGE': return [...state, action.payload.message]
-    default: return state
+    case 'SENT_MESSAGE':
+      return [...state, { message: action.payload.message, username: action.payload.username }]
+    default:
+      return state
   }
 }
 

@@ -25,6 +25,29 @@ describe('reducer', () => {
     })
   })
 
+  describe('TYPED_MESSAGE', () => {
+    it('changes the language', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: ''
+      }
+      const action = {
+        type: 'TYPED_MESSAGE',
+        payload: {
+          message: 'H'
+        }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.chatInput).to.be.a('string')
+      expect(newState.chatInput).to.equal('H')
+    })
+  })
+
   describe('LOGGED_IN', () => {
     it('Logs in a user', () => {
       const oldState = {

@@ -25,7 +25,6 @@ const MessageInput = styled.div`
 class Chat extends Component {
   constructor(props) {
     super(props)
-    this.state = { value: '' }
     this.sendMessage = this.sendMessage.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -33,7 +32,7 @@ class Chat extends Component {
   componentDidMount() {
     socket.on('chat-message', message => {
       this.props.dispatch({
-        type: 'SEND_MESSAGE',
+        type: 'SENT_MESSAGE',
         payload: { message }
       })
       const messageContainer = document.querySelector('.message-container')
@@ -43,14 +42,20 @@ class Chat extends Component {
 
   handleChange(event) {
     const { value } = event.target
-    this.setState({ value })
+    this.props.dispatch({
+      type: 'TYPED_MESSAGE',
+      payload: { message: value }
+    })
   }
 
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
     socket.emit('chat-message', data.get('message'))
-    this.setState({ value: '' })
+    this.props.dispatch({
+      type: 'TYPED_MESSAGE',
+      payload: { message: '' }
+    })
   }
 
   render() {
@@ -59,7 +64,7 @@ class Chat extends Component {
         <MessageBody className='message-container'>
           {
             this.props.messages.map((message, i) => {
-              return <p key={i}>User: {message}</p>
+              return <p key={i}>{ this.props.user.username }: {message}</p>
             })
           }
         </MessageBody>
@@ -70,7 +75,7 @@ class Chat extends Component {
               name='message'
               className='form-control'
               onChange={ this.handleChange }
-              value={ this.state.value }/>
+              value={ this.props.chatInput }/>
           </form>
         </MessageInput>
       </div>
@@ -80,7 +85,9 @@ class Chat extends Component {
 
 const mapStateToProps = state => {
   return {
-    messages: state
+    messages: state.messages,
+    user: state.user,
+    chatInput: state.chatInput
   }
 }
 

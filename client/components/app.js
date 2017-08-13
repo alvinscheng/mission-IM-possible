@@ -15,8 +15,14 @@ class Main extends Component {
           <div className='pane-group'>
             <div className='pane-sm sidebar'>
               <div style={ margin }>
-                <LoginForm />
-                {/* {(!this.props.user.isLoggedIn) ? <SignupForm /> : <Welcome />} */}
+                {(this.props.user.isLoggedIn)
+                  ? <Welcome />
+                  : (this.props.components.find(val => {
+                    return val === 'SignupForm'
+                  }))
+                    ? <SignupForm />
+                  : <LoginForm />
+                }
               </div>
             </div>
             <div className='pane'>
@@ -31,7 +37,8 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    components: state.components
   }
 }
 

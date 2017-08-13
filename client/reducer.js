@@ -25,10 +25,18 @@ function chatInput(state = '', action) {
   }
 }
 
+function components(state = [], action) {
+  switch (action.type) {
+    case 'DISPLAYED_SIGNUP': return [...state, 'SignupForm']
+    default: return state
+  }
+}
+
 const reducer = combineReducers({
   messages: messages,
   user: user,
-  chatInput: chatInput
+  chatInput: chatInput,
+  components: components
 })
 
 export default reducer

@@ -5,6 +5,6 @@ const token = (localStorage.getItem('mission-IM-possible-jwtToken') ? localStora
 const username = (localStorage.getItem('mission-IM-possible-username') ? localStorage.getItem('mission-IM-possible-username') : '')
 const isLoggedIn = !!token
 
-const store = createStore(reducer, { user: { token, username, isLoggedIn } })
+const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn } })
 
 export default store

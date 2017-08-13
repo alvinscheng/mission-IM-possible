@@ -54,6 +54,9 @@ const LoginForm = () => {
             >
               Log In
             </button>
+            <p>New here? <a href='#' onClick={() => {
+              store.dispatch({ type: 'DISPLAYED_SIGNUP' })
+            }}>Create an account!</a></p>
           </form>
         )
       }}

@@ -12,7 +12,9 @@ describe('reducer', () => {
           username: '',
           token: '',
           isLoggedIn: false
-        }
+        },
+        chatInput: '',
+        components: []
       }
       const action = {
         type: 'SENT_MESSAGE',
@@ -35,7 +37,8 @@ describe('reducer', () => {
           token: '',
           isLoggedIn: false
         },
-        chatInput: ''
+        chatInput: '',
+        components: []
       }
       const action = {
         type: 'TYPED_MESSAGE',
@@ -57,7 +60,9 @@ describe('reducer', () => {
           username: '',
           token: '',
           isLoggedIn: false
-        }
+        },
+        chatInput: '',
+        components: []
       }
       const action = {
         type: 'LOGGED_IN',
@@ -83,7 +88,8 @@ describe('reducer', () => {
           token: '',
           isLoggedIn: false
         },
-        chatInput: ''
+        chatInput: '',
+        components: []
       }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)

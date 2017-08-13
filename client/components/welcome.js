@@ -4,7 +4,15 @@ import { connect } from 'react-redux'
 class Intro extends Component {
   render() {
     return (
-      <h5>{ this.props.user.username }</h5>
+      <div>
+        <h5>{ this.props.user.username }</h5>
+        <button
+          type='button'
+          className='btn btn-form btn-default'
+        >
+          Log Out
+        </button>
+      </div>
     )
   }
 }

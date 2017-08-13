@@ -29,10 +29,10 @@ function chatInput(state = '', action) {
 
 function components(state = [], action) {
   switch (action.type) {
-    case 'DISPLAYED_SIGNUP': return [...state, 'SignupForm']
-    case 'HID_SIGNUP':
+    case 'DISPLAYED_COMPONENT': return [...state, action.payload.component]
+    case 'HID_COMPONENT':
       return state.filter(val => {
-        return val !== 'SignupForm'
+        return val !== action.payload.component
       })
     default: return state
   }

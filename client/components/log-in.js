@@ -55,7 +55,10 @@ const LoginForm = () => {
               Log In
             </button>
             <p>New here? <a href='#' onClick={() => {
-              store.dispatch({ type: 'DISPLAYED_SIGNUP' })
+              store.dispatch({
+                type: 'DISPLAYED_COMPONENT',
+                payload: { component: 'SignupForm' }
+              })
             }}>Create an account!</a></p>
           </form>
         )

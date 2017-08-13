@@ -25,7 +25,10 @@ const SignupForm = () => {
           })
         })
         .then(() => {
-          store.dispatch({ type: 'HID_SIGNUP' })
+          store.dispatch({
+            type: 'HID_COMPONENT',
+            payload: { component: 'SignupForm' }
+          })
         })
         .catch(err => {
           console.log(err)

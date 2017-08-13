@@ -9,6 +9,8 @@ class Intro extends Component {
 
   logOut() {
     this.props.dispatch({ type: 'LOGGED_OUT' })
+    localStorage.removeItem('mission-IM-possible-jwtToken')
+    localStorage.removeItem('mission-IM-possible-username')
   }
 
   render() {

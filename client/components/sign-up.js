@@ -24,6 +24,9 @@ const SignupForm = () => {
             }
           })
         })
+        .then(() => {
+          store.dispatch({ type: 'HID_SIGNUP' })
+        })
         .catch(err => {
           console.log(err)
           alert('Username already taken.')

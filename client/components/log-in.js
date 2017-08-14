@@ -6,26 +6,30 @@ const LoginForm = () => {
   return (
     <Form
       onSubmit={data => {
-        fetch('https://stark-meadow-83882.herokuapp.com/register', {
+        fetch('https://stark-meadow-83882.herokuapp.com/authenticate', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
         })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('mission-IM-possible-jwtToken', data.token)
-          localStorage.setItem('mission-IM-possible-username', data.username)
-          store.dispatch({
-            type: 'LOGGED_IN',
-            payload: {
-              username: data.username,
-              token: data.token
-            }
-          })
+          if (!data.error) {
+            localStorage.setItem('mission-IM-possible-jwtToken', data.token)
+            localStorage.setItem('mission-IM-possible-username', data.username)
+            store.dispatch({
+              type: 'LOGGED_IN',
+              payload: {
+                username: data.username,
+                token: data.token
+              }
+            })
+          }
+          else {
+            alert(data.error)
+          }
         })
         .catch(err => {
           console.log(err)
-          alert('Username already taken.')
         })
       }}
     >

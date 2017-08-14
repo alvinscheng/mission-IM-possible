@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import io from 'socket.io-client'
 
 const socket = io('https://stark-meadow-83882.herokuapp.com', {
-  path: '/api/connect'
+  path: '/api/connect',
+  'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
 })
 
 const MessageBody = styled.div`
@@ -33,7 +34,10 @@ class Chat extends Component {
     socket.on('chat-message', message => {
       this.props.dispatch({
         type: 'SENT_MESSAGE',
-        payload: { message }
+        payload: {
+          username: this.props.user.username,
+          message: message
+        }
       })
       const messageContainer = document.querySelector('.message-container')
       messageContainer.scrollTop = messageContainer.scrollHeight
@@ -64,7 +68,7 @@ class Chat extends Component {
         <MessageBody className='message-container'>
           {
             this.props.messages.map((message, i) => {
-              return <p key={i}>{ this.props.user.username }: {message}</p>
+              return <p key={i}>{ message.username }: { message.message }</p>
             })
           }
         </MessageBody>

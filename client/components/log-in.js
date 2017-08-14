@@ -2,47 +2,35 @@ import React from 'react'
 import { Form, Text } from 'react-form'
 import store from '../store'
 
-const SignupForm = () => {
+const LoginForm = () => {
   return (
     <Form
       onSubmit={data => {
-        fetch('https://stark-meadow-83882.herokuapp.com/register', {
+        fetch('https://stark-meadow-83882.herokuapp.com/authenticate', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
         })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('mission-IM-possible-jwtToken', data.token)
-          localStorage.setItem('mission-IM-possible-username', data.username)
-          store.dispatch({
-            type: 'LOGGED_IN',
-            payload: {
-              username: data.username,
-              token: data.token
-            }
-          })
-        })
-        .then(() => {
-          store.dispatch({
-            type: 'HID_COMPONENT',
-            payload: { component: 'SignupForm' }
-          })
+          if (!data.error) {
+            localStorage.setItem('mission-IM-possible-jwtToken', data.token)
+            localStorage.setItem('mission-IM-possible-username', data.username)
+            store.dispatch({
+              type: 'LOGGED_IN',
+              payload: {
+                username: data.username,
+                token: data.token
+              }
+            })
+          }
+          else {
+            alert(data.error)
+          }
         })
         .catch(err => {
           console.log(err)
-          alert('Username already taken.')
         })
-      }}
-      validate={({ username, password }) => {
-        return {
-          username: !username ? 'A username is required' : null,
-          password: (!password || password.length < 6)
-          ? 'A password of 6 or more characters is required'
-          : (!password.match(/(?=.*\d)(?=.*[a-zA-Z])/))
-            ? 'Password must include at least 1 letter and 1 number'
-            : null
-        }
       }}
     >
       {({submitForm}) => {
@@ -67,8 +55,14 @@ const SignupForm = () => {
               type='submit'
               className='btn btn-form btn-default'
             >
-              Create Account
+              Log In
             </button>
+            <p>New here? <a href='#' onClick={() => {
+              store.dispatch({
+                type: 'DISPLAYED_COMPONENT',
+                payload: { component: 'SignupForm' }
+              })
+            }}>Create an account!</a></p>
           </form>
         )
       }}
@@ -76,4 +70,4 @@ const SignupForm = () => {
   )
 }
 
-export default SignupForm
+export default LoginForm

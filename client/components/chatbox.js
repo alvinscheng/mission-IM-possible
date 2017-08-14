@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import io from 'socket.io-client'
 
 const socket = io('https://stark-meadow-83882.herokuapp.com', {
-  path: '/api/connect'
+  path: '/api/connect',
+  'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
 })
 
 const MessageBody = styled.div`

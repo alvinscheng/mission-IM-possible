@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 const token = (localStorage.getItem('mission-IM-possible-jwtToken') ? localStorage.getItem('mission-IM-possible-jwtToken') : '')
 const username = (localStorage.getItem('mission-IM-possible-username') ? localStorage.getItem('mission-IM-possible-username') : '')
 const isLoggedIn = !!token
-let socket
+let socket = null
 
 const socketInit = () => {
   socket = io('https://stark-meadow-83882.herokuapp.com', {
@@ -21,4 +21,4 @@ if (isLoggedIn) {
 
 const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn } })
 
-module.exports = { store, socketInit }
+module.exports = { store, socketInit, socket }

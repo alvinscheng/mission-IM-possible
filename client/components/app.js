@@ -38,7 +38,8 @@ class Main extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    components: state.components
+    components: state.components,
+    userList: state.userList
   }
 }
 

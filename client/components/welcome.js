@@ -17,6 +17,13 @@ class Intro extends Component {
     return (
       <div>
         <h5>{ this.props.user.username }</h5>
+        <div>
+          {
+            this.props.userList.map((user, i) => {
+              return <div key={ i }>{ user }</div>
+            })
+          }
+        </div>
         <button
           type='button'
           className='btn btn-form btn-default'
@@ -31,7 +38,8 @@ class Intro extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    userList: state.userList
   }
 }
 

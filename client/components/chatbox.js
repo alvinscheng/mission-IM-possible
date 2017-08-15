@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import socket from '../store.js'
+import { socket } from '../store.js'
 
 const MessageBody = styled.div`
   font-family: 'Open Sans', sans-serif;

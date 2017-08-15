@@ -29,7 +29,7 @@ class Main extends Component {
         <div className='window-content'>
           <div className='pane-group'>
             <div className='pane-sm sidebar'>
-              <div style={ margin }>
+              <div>
                 {
                   (this.props.user.isLoggedIn)
                   ? <Welcome />

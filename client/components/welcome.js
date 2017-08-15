@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+
+const UserName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #3498db;
+  color: #ecf0f1;
+  text-align: left;
+  font-size: 16px;;
+`
+const margin = { margin: '5px 5px 5px 10px' }
 
 class Intro extends Component {
   constructor(props) {
@@ -11,7 +23,7 @@ class Intro extends Component {
     this.props.dispatch({ type: 'LOGGED_OUT' })
     this.props.dispatch({
       type: 'REMOVE_USER',
-      payload: { user: this.props.user }
+      payload: { user: this.props.user.username }
     })
     localStorage.removeItem('mission-IM-possible-jwtToken')
     localStorage.removeItem('mission-IM-possible-username')
@@ -20,21 +32,23 @@ class Intro extends Component {
   render() {
     return (
       <div>
-        <h5>{ this.props.user.username }</h5>
-        <div>
+        <UserName>
+            { this.props.user.username }
+            <button
+              type='button'
+              className='btn btn-mini btn-negative'
+              onClick={ this.logOut }
+            >
+              X
+            </button>
+        </UserName>
+        <div style={ margin }>
           {
             this.props.userList.map((user, i) => {
               return <div key={ i }>{ user }</div>
             })
           }
         </div>
-        <button
-          type='button'
-          className='btn btn-form btn-default'
-          onClick={ this.logOut }
-        >
-          Log Out
-        </button>
       </div>
     )
   }

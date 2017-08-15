@@ -25,17 +25,19 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.props.socket.on('chat-message', msg => {
-      this.props.dispatch({
-        type: 'SENT_MESSAGE',
-        payload: {
-          username: msg.username,
-          message: msg.message
-        }
+    if (this.props.socket) {
+      this.props.socket.on('chat-message', msg => {
+        this.props.dispatch({
+          type: 'SENT_MESSAGE',
+          payload: {
+            username: msg.username,
+            message: msg.message
+          }
+        })
+        const messageContainer = document.querySelector('.message-container')
+        messageContainer.scrollTop = messageContainer.scrollHeight
       })
-      const messageContainer = document.querySelector('.message-container')
-      messageContainer.scrollTop = messageContainer.scrollHeight
-    })
+    }
   }
 
   handleChange(event) {

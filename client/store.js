@@ -14,6 +14,10 @@ function createConnection() {
   return socket
 }
 
-const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn }, socket: createConnection() })
+const store = createStore(reducer, {
+  components: [],
+  user: { token, username, isLoggedIn },
+  socket: (isLoggedIn ? createConnection() : {})
+})
 
 module.exports = { store, createConnection }

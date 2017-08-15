@@ -20,12 +20,14 @@ class Intro extends Component {
   }
 
   componentDidMount() {
-    this.props.socket.on('new-user-login', username => {
-      this.props.dispatch({
-        type: 'REQUESTED_USERLIST',
-        payload: { user: username }
+    if (this.props.socket) {
+      this.props.socket.on('new-user-login', username => {
+        this.props.dispatch({
+          type: 'REQUESTED_USERLIST',
+          payload: { user: username }
+        })
       })
-    })
+    }
   }
 
   logOut() {

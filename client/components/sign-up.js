@@ -6,7 +6,7 @@ const SignupForm = props => {
   return (
     <Form
       onSubmit={data => {
-        fetch('https://stark-meadow-83882.herokuapp.com/register', {
+        fetch('http://localhost:3000/register', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
@@ -29,12 +29,6 @@ const SignupForm = props => {
             }
           })
           return data.username
-        })
-        .then(username => {
-          store.dispatch({
-            type: 'REQUEST_USERLIST',
-            payload: { user: username }
-          })
         })
         .then(() => {
           store.dispatch({

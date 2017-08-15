@@ -7,7 +7,7 @@ const username = (localStorage.getItem('mission-IM-possible-username') ? localSt
 const isLoggedIn = !!token
 
 function createConnection() {
-  const socket = io('https://stark-meadow-83882.herokuapp.com', {
+  const socket = io('http://localhost:3000', {
     path: '/api/connect',
     'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
   })

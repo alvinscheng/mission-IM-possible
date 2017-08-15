@@ -19,6 +19,15 @@ class Intro extends Component {
     this.logOut = this.logOut.bind(this)
   }
 
+  componentDidMount() {
+    this.props.socket.on('new-user-login', username => {
+      this.props.dispatch({
+        type: 'REQUEST_USERLIST',
+        payload: { user: username }
+      })
+    })
+  }
+
   logOut() {
     this.props.dispatch({ type: 'LOGGED_OUT' })
     this.props.dispatch({

@@ -6,11 +6,14 @@ const token = (localStorage.getItem('mission-IM-possible-jwtToken') ? localStora
 const username = (localStorage.getItem('mission-IM-possible-username') ? localStorage.getItem('mission-IM-possible-username') : '')
 const isLoggedIn = !!token
 
-const socket = io('https://stark-meadow-83882.herokuapp.com', {
-  path: '/api/connect',
-  'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
-})
+function createConnection() {
+  const socket = io('https://stark-meadow-83882.herokuapp.com', {
+    path: '/api/connect',
+    'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
+  })
+  return socket
+}
 
-const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn } })
+const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn }, socket: createConnection() })
 
-module.exports = { store, socket }
+module.exports = { store, createConnection }

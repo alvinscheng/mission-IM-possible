@@ -49,12 +49,20 @@ function userList(state = [], action) {
   }
 }
 
+function socket(state = {}, action) {
+  switch (action.type) {
+    case 'SOCKET_CONNECTED': return action.payload.socket
+    default: return state
+  }
+}
+
 const reducer = combineReducers({
-  messages: messages,
-  user: user,
-  chatInput: chatInput,
-  components: components,
-  userList: userList
+  messages,
+  user,
+  chatInput,
+  components,
+  userList,
+  socket
 })
 
 export default reducer

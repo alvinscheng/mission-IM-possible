@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { socket } from '../store.js'
 
 const UserName = styled.div`
   display: flex;
@@ -26,7 +25,7 @@ class Intro extends Component {
       type: 'REMOVE_USER',
       payload: { user: this.props.user.username }
     })
-    socket.disconnect()
+    this.props.socket.disconnect()
     localStorage.removeItem('mission-IM-possible-jwtToken')
     localStorage.removeItem('mission-IM-possible-username')
   }
@@ -62,7 +61,8 @@ class Intro extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    userList: state.userList
+    userList: state.userList,
+    socket: state.socket
   }
 }
 

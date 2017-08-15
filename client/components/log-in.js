@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
-import { store, socket } from '../store'
+import { store, createConnection } from '../store'
 
-const LoginForm = () => {
+const LoginForm = props => {
   return (
     <Form
       onSubmit={data => {
@@ -16,7 +16,12 @@ const LoginForm = () => {
           if (!data.error) {
             localStorage.setItem('mission-IM-possible-jwtToken', data.token)
             localStorage.setItem('mission-IM-possible-username', data.username)
+            let socket = createConnection()
             socket.emit('new-user-login', data.username)
+            store.dispatch({
+              type: 'SOCKET_CONNECTED',
+              payload: {socket}
+            })
             store.dispatch({
               type: 'LOGGED_IN',
               payload: {

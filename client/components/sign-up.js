@@ -1,14 +1,13 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
 import store from '../store'
-
-// Prev FETCH https://stark-meadow-83882.herokuapp.com/register
+import socket from '../socket.js'
 
 const SignupForm = () => {
   return (
     <Form
       onSubmit={data => {
-        fetch('http://localhost:3000/register', {
+        fetch('https://stark-meadow-83882.herokuapp.com/register', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
@@ -17,6 +16,7 @@ const SignupForm = () => {
         .then(data => {
           localStorage.setItem('mission-IM-possible-jwtToken', data.token)
           localStorage.setItem('mission-IM-possible-username', data.username)
+          socket.emit('new-user-signup', data.username)
           store.dispatch({
             type: 'LOGGED_IN',
             payload: {

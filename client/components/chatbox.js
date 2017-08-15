@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import io from 'socket.io-client'
-
-const socket = io('https://stark-meadow-83882.herokuapp.com', {
-  path: '/api/connect',
-  'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
-})
+import socket from '../socket.js'
 
 const MessageBody = styled.div`
   font-family: 'Open Sans', sans-serif;

@@ -44,7 +44,10 @@ class Intro extends Component {
         </UserName>
         <div style={ margin }>
           {
-            this.props.userList.map((user, i) => {
+            this.props.userList.filter(user => {
+              return user !== this.props.user.username
+            })
+            .map((user, i) => {
               return <div key={ i }>{ user }</div>
             })
           }

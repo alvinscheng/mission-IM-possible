@@ -153,7 +153,8 @@ describe('reducer', () => {
         },
         chatInput: '',
         components: [],
-        userList: []
+        userList: [],
+        socket: {}
       }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)

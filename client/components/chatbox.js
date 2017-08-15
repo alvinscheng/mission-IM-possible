@@ -25,12 +25,12 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.props.socket.on('chat-message', message => {
+    this.props.socket.on('chat-message', msg => {
       this.props.dispatch({
         type: 'SENT_MESSAGE',
         payload: {
-          username: this.props.user.username,
-          message: message
+          username: msg.username,
+          message: msg.message
         }
       })
       const messageContainer = document.querySelector('.message-container')
@@ -49,7 +49,10 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    this.props.socket.emit('chat-message', data.get('message'))
+    this.props.socket.emit('chat-message', {
+      message: data.get('message'),
+      username: this.props.user.username
+    })
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }

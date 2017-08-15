@@ -40,8 +40,8 @@ function components(state = [], action) {
 
 function userList(state = [], action) {
   switch (action.type) {
-    case 'REQUEST_USERLIST': return [...state, action.payload.user]
-    case 'REMOVE_USER':
+    case 'REQUESTED_USERLIST': return [...state, action.payload.user]
+    case 'REMOVED_USER':
       return state.filter(user => {
         return user !== action.payload.user
       })

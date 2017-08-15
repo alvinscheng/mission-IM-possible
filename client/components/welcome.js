@@ -22,7 +22,7 @@ class Intro extends Component {
   componentDidMount() {
     this.props.socket.on('new-user-login', username => {
       this.props.dispatch({
-        type: 'REQUEST_USERLIST',
+        type: 'REQUESTED_USERLIST',
         payload: { user: username }
       })
     })

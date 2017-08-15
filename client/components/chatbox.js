@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { socketInit } from '../store.js'
+import { socket } from '../store.js'
 
 const MessageBody = styled.div`
   font-family: 'Open Sans', sans-serif;
@@ -26,7 +26,7 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    socketInit().on('chat-message', message => {
+    socket.on('chat-message', message => {
       this.props.dispatch({
         type: 'SENT_MESSAGE',
         payload: {
@@ -50,7 +50,7 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    socketInit().emit('chat-message', data.get('message'))
+    socket.emit('chat-message', data.get('message'))
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }

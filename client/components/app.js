@@ -6,8 +6,6 @@ import LoginForm from './log-in'
 import Welcome from './welcome'
 import styled from 'styled-components'
 
-const margin = { margin: '20px' }
-
 const EntryPoint = styled.div`
   font-family: 'Open Sans', sans-serif;
   position: fixed;
@@ -38,19 +36,23 @@ class Main extends Component {
               </div>
             </div>
             <div className='pane'>
-              <Chatbox />
-                {(this.props.user.isLoggedIn)
-                  ? null
-                  : <EntryPoint>
-                    {
-                      (this.props.components.find(val => {
-                        return val === 'SignupForm'
-                      }))
-                        ? <SignupForm />
-                      : <LoginForm />
-                    }
-                  </EntryPoint>
-                }
+              {
+                (this.props.user.isLoggedIn)
+                ? <Chatbox />
+                : null
+              }
+              {(this.props.user.isLoggedIn)
+                ? null
+                : <EntryPoint>
+                  {
+                    (this.props.components.find(val => {
+                      return val === 'SignupForm'
+                    }))
+                      ? <SignupForm />
+                    : <LoginForm />
+                  }
+                </EntryPoint>
+              }
             </div>
           </div>
         </div>

@@ -19,6 +19,6 @@ if (isLoggedIn) {
   socketInit()
 }
 
-const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn }, userList: [] })
+const store = createStore(reducer, { components: [], user: { token, username, isLoggedIn } })
 
 module.exports = { store, socketInit }

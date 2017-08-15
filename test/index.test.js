@@ -152,7 +152,8 @@ describe('reducer', () => {
           isLoggedIn: false
         },
         chatInput: '',
-        components: []
+        components: [],
+        userList: []
       }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)

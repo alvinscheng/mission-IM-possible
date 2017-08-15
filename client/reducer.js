@@ -50,7 +50,7 @@ const reducer = combineReducers({
   user: user,
   chatInput: chatInput,
   components: components,
-//  userList: userList
+  userList: userList
 })
 
 export default reducer

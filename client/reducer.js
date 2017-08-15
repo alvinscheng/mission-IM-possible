@@ -38,11 +38,19 @@ function components(state = [], action) {
   }
 }
 
+function userList(state = [], action) {
+  switch (action.type) {
+    case 'REQUEST_USERLIST': return [...state, action.payload.user]
+    default: return state
+  }
+}
+
 const reducer = combineReducers({
   messages: messages,
   user: user,
   chatInput: chatInput,
-  components: components
+  components: components,
+//  userList: userList
 })
 
 export default reducer

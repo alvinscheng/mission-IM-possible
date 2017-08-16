@@ -23,7 +23,7 @@ class Intro extends Component {
     if (this.props.socket) {
       this.props.socket.on('new-user-login', username => {
         this.props.dispatch({
-          type: 'REQUESTED_USERLIST',
+          type: 'ADDED_USER',
           payload: { user: username }
         })
       })
@@ -47,14 +47,14 @@ class Intro extends Component {
     return (
       <div>
         <UserName>
-            { this.props.user.username }
-            <button
-              type='button'
-              className='btn btn-mini btn-negative'
-              onClick={ this.logOut }
-            >
-              X
-            </button>
+          { this.props.user.username }
+          <button
+            type='button'
+            className='btn btn-mini btn-negative'
+            onClick={ this.logOut }
+          >
+            X
+          </button>
         </UserName>
         <div style={ margin }>
           {

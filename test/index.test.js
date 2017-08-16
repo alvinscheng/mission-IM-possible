@@ -142,6 +142,52 @@ describe('reducer', () => {
     })
   })
 
+  describe('ADDED_USER', () => {
+    it('removes a component from the state', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: ['SignupForm'],
+        userList: ['user1']
+      }
+      const action = {
+        type: 'ADDED_USER',
+        payload: { user: 'user2' }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.userList).to.be.an('array').with.length(2)
+      expect(newState.userList[1]).to.equal('user2')
+    })
+  })
+
+  describe('REMOVED_USER', () => {
+    it('removes a component from the state', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: ['SignupForm'],
+        userList: ['user1', 'user2']
+      }
+      const action = {
+        type: 'REMOVED_USER',
+        payload: { user: 'user2' }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.userList).to.be.an('array').with.length(1)
+      expect(newState.userList[0]).to.equal('user1')
+    })
+  })
+
   describe('DEFAULT', () => {
     it('defaults', () => {
       const oldState = {

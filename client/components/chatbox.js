@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import io from 'socket.io-client'
-
-const socket = io('https://stark-meadow-83882.herokuapp.com', {
-  path: '/api/connect',
-  'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
-})
 
 const MessageBody = styled.div`
   font-family: 'Open Sans', sans-serif;
@@ -31,17 +25,19 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    socket.on('chat-message', message => {
-      this.props.dispatch({
-        type: 'SENT_MESSAGE',
-        payload: {
-          username: this.props.user.username,
-          message: message
-        }
+    if (this.props.socket) {
+      this.props.socket.on('chat-message', msg => {
+        this.props.dispatch({
+          type: 'SENT_MESSAGE',
+          payload: {
+            username: msg.username,
+            message: msg.message
+          }
+        })
+        const messageContainer = document.querySelector('.message-container')
+        messageContainer.scrollTop = messageContainer.scrollHeight
       })
-      const messageContainer = document.querySelector('.message-container')
-      messageContainer.scrollTop = messageContainer.scrollHeight
-    })
+    }
   }
 
   handleChange(event) {
@@ -55,7 +51,10 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    socket.emit('chat-message', data.get('message'))
+    this.props.socket.emit('chat-message', {
+      message: data.get('message'),
+      username: this.props.user.username
+    })
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }
@@ -91,7 +90,8 @@ const mapStateToProps = state => {
   return {
     messages: state.messages,
     user: state.user,
-    chatInput: state.chatInput
+    chatInput: state.chatInput,
+    socket: state.socket
   }
 }
 

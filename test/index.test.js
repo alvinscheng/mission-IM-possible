@@ -142,6 +142,75 @@ describe('reducer', () => {
     })
   })
 
+  describe('ADDED_USER', () => {
+    it('removes a component from the state', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: ['SignupForm'],
+        userList: ['user1']
+      }
+      const action = {
+        type: 'ADDED_USER',
+        payload: { user: 'user2' }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.userList).to.be.an('array').with.length(2)
+      expect(newState.userList[1]).to.equal('user2')
+    })
+  })
+
+  describe('REMOVED_USER', () => {
+    it('removes a component from the state', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: ['SignupForm'],
+        userList: ['user1', 'user2']
+      }
+      const action = {
+        type: 'REMOVED_USER',
+        payload: { user: 'user2' }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.userList).to.be.an('array').with.length(1)
+      expect(newState.userList[0]).to.equal('user1')
+    })
+  })
+
+  describe('SOCKET_CONNECTED', () => {
+    it('connects a socket', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: [],
+        userList: [],
+        socket: {}
+      }
+      const action = {
+        type: 'SOCKET_CONNECTED',
+        payload: { socket: true }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.socket).to.equal(true)
+    })
+  })
+
   describe('DEFAULT', () => {
     it('defaults', () => {
       const oldState = {
@@ -152,7 +221,9 @@ describe('reducer', () => {
           isLoggedIn: false
         },
         chatInput: '',
-        components: []
+        components: [],
+        userList: [],
+        socket: {}
       }
       const action = { type: 'DEFAULT' }
       const newState = reducer(oldState, action)

@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+
+const UserName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #3498db;
+  color: #ecf0f1;
+  text-align: left;
+  font-size: 16px;;
+`
+const margin = { margin: '5px 5px 5px 10px' }
 
 class Intro extends Component {
   constructor(props) {
@@ -7,8 +19,30 @@ class Intro extends Component {
     this.logOut = this.logOut.bind(this)
   }
 
+  componentDidMount() {
+    if (this.props.socket) {
+      this.props.socket.on('new-user-login', username => {
+        this.props.dispatch({
+          type: 'ADDED_USER',
+          payload: { user: username }
+        })
+      })
+      this.props.socket.on('user-disconnected', username => {
+        this.props.dispatch({
+          type: 'REMOVED_USER',
+          payload: { user: username }
+        })
+      })
+    }
+  }
+
   logOut() {
     this.props.dispatch({ type: 'LOGGED_OUT' })
+    this.props.dispatch({
+      type: 'REMOVED_USER',
+      payload: { user: this.props.user.username }
+    })
+    this.props.socket.disconnect()
     localStorage.removeItem('mission-IM-possible-jwtToken')
     localStorage.removeItem('mission-IM-possible-username')
   }
@@ -16,14 +50,26 @@ class Intro extends Component {
   render() {
     return (
       <div>
-        <h5>{ this.props.user.username }</h5>
-        <button
-          type='button'
-          className='btn btn-form btn-default'
-          onClick={ this.logOut }
-        >
-          Log Out
-        </button>
+        <UserName>
+          { this.props.user.username }
+          <button
+            type='button'
+            className='btn btn-mini btn-negative'
+            onClick={ this.logOut }
+          >
+            X
+          </button>
+        </UserName>
+        <div style={ margin }>
+          {
+            this.props.userList.filter(user => {
+              return user !== this.props.user.username
+            })
+            .map((user, i) => {
+              return <div key={ i }>{ user }</div>
+            })
+          }
+        </div>
       </div>
     )
   }
@@ -31,7 +77,9 @@ class Intro extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    userList: state.userList,
+    socket: state.socket
   }
 }
 

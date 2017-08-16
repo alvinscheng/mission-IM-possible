@@ -38,11 +38,31 @@ function components(state = [], action) {
   }
 }
 
+function userList(state = [], action) {
+  switch (action.type) {
+    case 'ADDED_USER': return [...state, action.payload.user]
+    case 'REMOVED_USER':
+      return state.filter(user => {
+        return user !== action.payload.user
+      })
+    default: return state
+  }
+}
+
+function socket(state = {}, action) {
+  switch (action.type) {
+    case 'SOCKET_CONNECTED': return action.payload.socket
+    default: return state
+  }
+}
+
 const reducer = combineReducers({
-  messages: messages,
-  user: user,
-  chatInput: chatInput,
-  components: components
+  messages,
+  user,
+  chatInput,
+  components,
+  userList,
+  socket
 })
 
 export default reducer

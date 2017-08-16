@@ -4,8 +4,21 @@ import Chatbox from './chatbox'
 import SignupForm from './sign-up'
 import LoginForm from './log-in'
 import Welcome from './welcome'
+import styled from 'styled-components'
 
-const margin = { margin: '20px' }
+const EntryPoint = styled.div`
+  font-family: 'Open Sans', sans-serif;
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  top: 40%;
+  left: 50%;
+  margin: -75px 0 0 -75px;
+  border: 2px solid #bdc3c7;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #ecf0f1;
+`
 
 class Main extends Component {
   render() {
@@ -14,19 +27,32 @@ class Main extends Component {
         <div className='window-content'>
           <div className='pane-group'>
             <div className='pane-sm sidebar'>
-              <div style={ margin }>
-                {(this.props.user.isLoggedIn)
+              <div>
+                {
+                  (this.props.user.isLoggedIn)
                   ? <Welcome />
-                  : (this.props.components.find(val => {
-                    return val === 'SignupForm'
-                  }))
-                    ? <SignupForm />
-                  : <LoginForm />
+                  : null
                 }
               </div>
             </div>
             <div className='pane'>
-              <Chatbox />
+              {
+                (this.props.user.isLoggedIn)
+                ? <Chatbox />
+                : null
+              }
+              {(this.props.user.isLoggedIn)
+                ? null
+                : <EntryPoint>
+                  {
+                    (this.props.components.find(val => {
+                      return val === 'SignupForm'
+                    }))
+                      ? <SignupForm />
+                    : <LoginForm />
+                  }
+                </EntryPoint>
+              }
             </div>
           </div>
         </div>
@@ -38,7 +64,8 @@ class Main extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    components: state.components
+    components: state.components,
+    userList: state.userList
   }
 }
 

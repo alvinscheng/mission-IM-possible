@@ -12,10 +12,15 @@ Under the <>Code tab, click on the releases tab and download the zip file for th
 
 ### Technologies Used
 
+  * Node v8.1.3
   * React v15.6.1
   * Redux v3.7.2
   * React-Redux v5.0.5
   * Socket.IO v2.0.3
+  * Express v4.15.4
   * Electron v1.6.11
+  * JSON Web Tokens
+  * Bcrypt v1.0.2
+  * PostgreSQL
   * Mocha v3.5.0
   * Chai v4.1.1

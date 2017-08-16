@@ -6,7 +6,7 @@ const SignupForm = props => {
   return (
     <Form
       onSubmit={data => {
-        fetch('http://localhost:3000/register', {
+        fetch('https://stark-meadow-83882.herokuapp.com/register', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }

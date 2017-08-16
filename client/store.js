@@ -9,7 +9,10 @@ const isLoggedIn = !!token
 function createConnection() {
   const socket = io('http://localhost:3000', {
     path: '/api/connect',
-    'query': 'token=' + localStorage.getItem('mission-IM-possible-jwtToken')
+    'query': {
+      token: localStorage.getItem('mission-IM-possible-jwtToken'),
+      username: localStorage.getItem('mission-IM-possible-username')
+    }
   })
   return socket
 }

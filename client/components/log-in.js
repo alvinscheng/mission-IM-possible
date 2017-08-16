@@ -6,7 +6,8 @@ const LoginForm = props => {
   return (
     <Form
       onSubmit={data => {
-        fetch('https://stark-meadow-83882.herokuapp.com/authenticate', {
+        // fetch('https://stark-meadow-83882.herokuapp.com/authenticate', {
+        fetch('http://localhost:3000/authenticate', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }

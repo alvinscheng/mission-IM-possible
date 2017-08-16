@@ -21,10 +21,10 @@ class Intro extends Component {
 
   componentDidMount() {
     if (this.props.socket) {
-      this.props.socket.on('new-user-login', username => {
+      this.props.socket.on('new-user-login', users => {
         this.props.dispatch({
           type: 'ADDED_USER',
-          payload: { user: username }
+          payload: { users }
         })
       })
       this.props.socket.on('user-disconnected', username => {

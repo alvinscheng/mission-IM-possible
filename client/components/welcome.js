@@ -9,7 +9,13 @@ const UserName = styled.div`
   background-color: #3498db;
   color: #ecf0f1;
   text-align: left;
-  font-size: 16px;;
+  font-size: 16px;
+  margin-bottom: 10px;
+`
+const Username = styled.div`
+  font-size: 14px;
+  margin: 5px;
+  font-weight: bold;
 `
 const margin = { margin: '5px 5px 5px 10px' }
 
@@ -57,12 +63,14 @@ class Intro extends Component {
           </button>
         </UserName>
         <div style={ margin }>
+          <Username>alvin</Username>
+          <Username>alvin</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
             })
             .map((user, i) => {
-              return <div key={ i }>{ user }</div>
+              return <Username key={ i }>{ user }</Username>
             })
           }
         </div>

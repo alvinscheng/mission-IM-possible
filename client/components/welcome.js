@@ -38,10 +38,6 @@ class Intro extends Component {
 
   logOut() {
     this.props.dispatch({ type: 'LOGGED_OUT' })
-    this.props.dispatch({
-      type: 'REMOVED_USER',
-      payload: { user: this.props.user.username }
-    })
     this.props.socket.disconnect()
     localStorage.removeItem('mission-IM-possible-jwtToken')
     localStorage.removeItem('mission-IM-possible-username')

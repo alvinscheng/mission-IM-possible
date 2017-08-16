@@ -143,7 +143,7 @@ describe('reducer', () => {
   })
 
   describe('ADDED_USER', () => {
-    it('removes a component from the state', () => {
+    it('updates the user list based off connected sockets', () => {
       const oldState = {
         messages: [],
         user: {
@@ -157,7 +157,9 @@ describe('reducer', () => {
       }
       const action = {
         type: 'ADDED_USER',
-        payload: { user: 'user2' }
+        payload: {
+          users: ['user1', 'user2']
+        }
       }
       const newState = reducer(oldState, action)
       expect(newState.userList).to.be.an('array').with.length(2)
@@ -166,7 +168,7 @@ describe('reducer', () => {
   })
 
   describe('REMOVED_USER', () => {
-    it('removes a component from the state', () => {
+    it('removes a user from the user list', () => {
       const oldState = {
         messages: [],
         user: {

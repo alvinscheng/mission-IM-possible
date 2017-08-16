@@ -9,7 +9,13 @@ const UserName = styled.div`
   background-color: #3498db;
   color: #ecf0f1;
   text-align: left;
-  font-size: 16px;;
+  font-size: 16px;
+  margin-bottom: 10px;
+`
+const Username = styled.div`
+  font-size: 14px;
+  margin: 5px;
+  font-weight: bold;
 `
 const margin = { margin: '5px 5px 5px 10px' }
 
@@ -21,10 +27,10 @@ class Intro extends Component {
 
   componentDidMount() {
     if (this.props.socket) {
-      this.props.socket.on('new-user-login', username => {
+      this.props.socket.on('new-user-login', users => {
         this.props.dispatch({
           type: 'ADDED_USER',
-          payload: { user: username }
+          payload: { users }
         })
       })
       this.props.socket.on('user-disconnected', username => {
@@ -38,10 +44,6 @@ class Intro extends Component {
 
   logOut() {
     this.props.dispatch({ type: 'LOGGED_OUT' })
-    this.props.dispatch({
-      type: 'REMOVED_USER',
-      payload: { user: this.props.user.username }
-    })
     this.props.socket.disconnect()
     localStorage.removeItem('mission-IM-possible-jwtToken')
     localStorage.removeItem('mission-IM-possible-username')
@@ -66,7 +68,7 @@ class Intro extends Component {
               return user !== this.props.user.username
             })
             .map((user, i) => {
-              return <div key={ i }>{ user }</div>
+              return <Username key={ i }>{ user }</Username>
             })
           }
         </div>

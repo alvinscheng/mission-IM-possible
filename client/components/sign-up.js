@@ -13,21 +13,26 @@ const SignupForm = props => {
         })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('mission-IM-possible-jwtToken', data.token)
-          localStorage.setItem('mission-IM-possible-username', data.username)
-          let socket = createConnection()
-          store.dispatch({
-            type: 'SOCKET_CONNECTED',
-            payload: {socket}
-          })
-          store.dispatch({
-            type: 'LOGGED_IN',
-            payload: {
-              username: data.username,
-              token: data.token
-            }
-          })
-          return data.username
+          if (!data.error) {
+            localStorage.setItem('mission-IM-possible-jwtToken', data.token)
+            localStorage.setItem('mission-IM-possible-username', data.username)
+            let socket = createConnection()
+            store.dispatch({
+              type: 'SOCKET_CONNECTED',
+              payload: {socket}
+            })
+            store.dispatch({
+              type: 'LOGGED_IN',
+              payload: {
+                username: data.username,
+                token: data.token
+              }
+            })
+            return data.username
+          }
+          else {
+            alert(data.error)
+          }
         })
         .then(() => {
           store.dispatch({
@@ -37,16 +42,15 @@ const SignupForm = props => {
         })
         .catch(err => {
           console.log(err)
-          alert('Username already taken.')
         })
       }}
       validate={({ username, password }) => {
         return {
           username: !username ? 'A username is required' : null,
           password: (!password || password.length < 6)
-          ? 'A password of 6 or more characters is required'
+          ? 'Must include 6+ characters'
           : (!password.match(/(?=.*\d)(?=.*[a-zA-Z])/))
-            ? 'Password must include at least 1 letter and 1 number'
+          ? ((!password.match(/[a-zA-Z]/)) ? 'Must include a letter' : 'Must include a number')
             : null
         }
       }}

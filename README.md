@@ -6,7 +6,7 @@ A desktop app for socializers to message friends.
 
 API: https://github.com/alvinscheng/mission-IM-possible-api.
 
-  
+---
 ![missionimpossible v1 0 0](https://user-images.githubusercontent.com/24768321/29383502-8215ecc6-8285-11e7-86c7-216d513ae8ef.gif)
 
 ### How to Use

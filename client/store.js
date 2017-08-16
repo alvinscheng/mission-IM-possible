@@ -7,11 +7,12 @@ const username = (localStorage.getItem('mission-IM-possible-username') ? localSt
 const isLoggedIn = !!token
 
 function createConnection() {
+  const username = localStorage.getItem('mission-IM-possible-username')
   const socket = io('http://localhost:3000', {
     path: '/api/connect',
     'query': {
       token: localStorage.getItem('mission-IM-possible-jwtToken'),
-      username: localStorage.getItem('mission-IM-possible-username')
+      username
     }
   })
   return socket

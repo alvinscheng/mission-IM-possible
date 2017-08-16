@@ -16,7 +16,6 @@ const SignupForm = props => {
           localStorage.setItem('mission-IM-possible-jwtToken', data.token)
           localStorage.setItem('mission-IM-possible-username', data.username)
           let socket = createConnection()
-          socket.emit('new-user-login', data.username)
           store.dispatch({
             type: 'SOCKET_CONNECTED',
             payload: {socket}

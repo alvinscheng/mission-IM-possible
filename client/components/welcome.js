@@ -63,8 +63,6 @@ class Intro extends Component {
           </button>
         </UserName>
         <div style={ margin }>
-          <Username>alvin</Username>
-          <Username>alvin</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username

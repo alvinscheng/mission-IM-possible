@@ -8,4 +8,4 @@ API: https://github.com/alvinscheng/mission-IM-possible-api
 
 ### How to Use
 
-Click on the releases tab and click download the zip file for version 1.0.0. In the folder, right-click the app and press open.
+Under the <>Code tab, click on the releases tab (https://github.com/alvinscheng/mission-IM-possible-client/releases) and download the zip file for version 1.0.0. In the folder, right-click the app and press open.

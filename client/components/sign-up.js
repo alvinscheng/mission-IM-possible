@@ -75,6 +75,12 @@ const SignupForm = props => {
             >
               Create Account
             </button>
+            <p>Already a member? <a href='#' onClick={() => {
+              store.dispatch({
+                type: 'HID_COMPONENT',
+                payload: { component: 'SignupForm' }
+              })
+            }}>Log In!</a></p>
           </form>
         )
       }}

@@ -188,6 +188,29 @@ describe('reducer', () => {
     })
   })
 
+  describe('SOCKET_CONNECTED', () => {
+    it('connects a socket', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: [],
+        userList: [],
+        socket: {}
+      }
+      const action = {
+        type: 'SOCKET_CONNECTED',
+        payload: { socket: true }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.socket).to.equal(true)
+    })
+  })
+
   describe('DEFAULT', () => {
     it('defaults', () => {
       const oldState = {

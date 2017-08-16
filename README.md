@@ -4,8 +4,9 @@ A desktop app for socializers to message friends.
 [![Build Status](https://travis-ci.org/alvinscheng/mission-IM-possible-client.svg?branch=master)](https://travis-ci.org/alvinscheng/mission-IM-possible-client)
 [![codecov](https://codecov.io/gh/alvinscheng/mission-IM-possible-client/branch/master/graph/badge.svg)](https://codecov.io/gh/alvinscheng/mission-IM-possible-client)
 
-API: https://github.com/alvinscheng/mission-IM-possible-api
+API: https://github.com/alvinscheng/mission-IM-possible-api.
 
+  
 ![missionimpossible v1 0 0](https://user-images.githubusercontent.com/24768321/29383502-8215ecc6-8285-11e7-86c7-216d513ae8ef.gif)
 
 ### How to Use

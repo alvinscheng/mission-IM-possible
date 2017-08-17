@@ -39,7 +39,7 @@ class Chat extends Component {
         messageContainer.scrollTop = messageContainer.scrollHeight
       })
     }
-    fetch('http://localhost:3000/messages')
+    fetch('https://stark-meadow-83882.herokuapp.com/messages')
       .then(res => res.json())
       .then(messages => {
         const loaded = messages.map(msg => {
@@ -75,7 +75,7 @@ class Chat extends Component {
       type: 'TYPED_MESSAGE',
       payload: { message: '' }
     })
-    fetch('http://localhost:3000/messages', {
+    fetch('https://stark-meadow-83882.herokuapp.com/messages', {
       method: 'POST',
       body: JSON.stringify(msg),
       headers: { 'Content-Type': 'application/json' }

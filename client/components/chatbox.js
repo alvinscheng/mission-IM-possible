@@ -66,13 +66,19 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    this.props.socket.emit('chat-message', {
+    const msg = {
       message: data.get('message'),
       username: this.props.user.username
-    })
+    }
+    this.props.socket.emit('chat-message', msg)
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }
+    })
+    fetch('http://localhost:3000/messages', {
+      method: 'POST',
+      body: JSON.stringify(msg),
+      headers: { 'Content-Type': 'application/json' }
     })
   }
 

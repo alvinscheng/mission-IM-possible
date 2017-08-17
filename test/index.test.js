@@ -28,6 +28,32 @@ describe('reducer', () => {
     })
   })
 
+  describe('LOADED_MESSAGES', () => {
+    it('Loads all messages to the chat', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: []
+      }
+      const action = {
+        type: 'LOADED_MESSAGES',
+        payload: {
+          messages: [
+            { message: 'Hello', username: 'user1' },
+            { message: 'World', username: 'user2' }
+          ]
+        }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.messages).to.be.an('array').with.length(2)
+    })
+  })
+
   describe('LOGGED_IN', () => {
     it('logs in a user', () => {
       const oldState = {

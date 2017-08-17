@@ -25,6 +25,19 @@ class Chat extends Component {
   }
 
   componentDidMount() {
+    fetch('http://localhost:3000/messages')
+      .then(res => res.json())
+      .then(messages => {
+        const loaded = messages.map(msg => {
+          return { message: msg.message, username: msg.username }
+        })
+        this.props.dispatch({
+          type: 'LOADED_MESSAGES',
+          payload: {
+            messages: loaded
+          }
+        })
+      })
     if (this.props.socket) {
       this.props.socket.on('chat-message', msg => {
         this.props.dispatch({

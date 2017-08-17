@@ -4,6 +4,8 @@ function messages(state = [], action) {
   switch (action.type) {
     case 'SENT_MESSAGE':
       return [...state, { message: action.payload.message, username: action.payload.username }]
+    case 'LOADED_MESSAGES':
+      return action.payload.messages
     default:
       return state
   }

@@ -23,6 +23,7 @@ class Intro extends Component {
   constructor(props) {
     super(props)
     this.logOut = this.logOut.bind(this)
+    this.clickUser = this.clickUser.bind(this)
   }
 
   componentDidMount() {
@@ -40,6 +41,25 @@ class Intro extends Component {
         })
       })
     }
+  }
+
+  clickUser(user) {
+    fetch('http://localhost:3000/messages?usernames=' + this.props.user.username + '+' + user)
+      .then(res => res.json())
+      .then(messages => {
+        console.log(messages)
+        const loaded = messages.map(msg => {
+          return { message: msg.message, username: msg.username }
+        }).reverse()
+        this.props.dispatch({
+          type: 'LOADED_MESSAGES',
+          payload: {
+            messages: loaded
+          }
+        })
+        const messageContainer = document.querySelector('.message-container')
+        messageContainer.scrollTop = messageContainer.scrollHeight
+      })
   }
 
   logOut() {
@@ -63,12 +83,13 @@ class Intro extends Component {
           </button>
         </UserName>
         <div style={ margin }>
+          <Username onClick={ () => this.clickUser('user1') } >user1</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
             })
             .map((user, i) => {
-              return <Username key={ i }>{ user }</Username>
+              return <Username key={ i } onClick={ this.clickUser } value={ user }>{ user }</Username>
             })
           }
         </div>

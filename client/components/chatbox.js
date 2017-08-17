@@ -25,19 +25,8 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/messages')
-      .then(res => res.json())
-      .then(messages => {
-        const loaded = messages.map(msg => {
-          return { message: msg.message, username: msg.username }
-        })
-        this.props.dispatch({
-          type: 'LOADED_MESSAGES',
-          payload: {
-            messages: loaded
-          }
-        })
-      })
+    const messageContainer = document.querySelector('.message-container')
+
     if (this.props.socket) {
       this.props.socket.on('chat-message', msg => {
         this.props.dispatch({
@@ -47,10 +36,23 @@ class Chat extends Component {
             message: msg.message
           }
         })
-        const messageContainer = document.querySelector('.message-container')
         messageContainer.scrollTop = messageContainer.scrollHeight
       })
     }
+    fetch('http://localhost:3000/messages')
+      .then(res => res.json())
+      .then(messages => {
+        const loaded = messages.map(msg => {
+          return { message: msg.message, username: msg.username }
+        }).reverse()
+        this.props.dispatch({
+          type: 'LOADED_MESSAGES',
+          payload: {
+            messages: loaded
+          }
+        })
+        messageContainer.scrollTop = messageContainer.scrollHeight
+      })
   }
 
   handleChange(event) {

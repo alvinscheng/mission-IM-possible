@@ -25,6 +25,8 @@ class Chat extends Component {
   }
 
   componentDidMount() {
+    const messageContainer = document.querySelector('.message-container')
+
     if (this.props.socket) {
       this.props.socket.on('chat-message', msg => {
         this.props.dispatch({
@@ -34,10 +36,23 @@ class Chat extends Component {
             message: msg.message
           }
         })
-        const messageContainer = document.querySelector('.message-container')
         messageContainer.scrollTop = messageContainer.scrollHeight
       })
     }
+    fetch('https://stark-meadow-83882.herokuapp.com/messages')
+      .then(res => res.json())
+      .then(messages => {
+        const loaded = messages.map(msg => {
+          return { message: msg.message, username: msg.username }
+        }).reverse()
+        this.props.dispatch({
+          type: 'LOADED_MESSAGES',
+          payload: {
+            messages: loaded
+          }
+        })
+        messageContainer.scrollTop = messageContainer.scrollHeight
+      })
   }
 
   handleChange(event) {
@@ -51,13 +66,19 @@ class Chat extends Component {
   sendMessage(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    this.props.socket.emit('chat-message', {
+    const msg = {
       message: data.get('message'),
       username: this.props.user.username
-    })
+    }
+    this.props.socket.emit('chat-message', msg)
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }
+    })
+    fetch('https://stark-meadow-83882.herokuapp.com/messages', {
+      method: 'POST',
+      body: JSON.stringify(msg),
+      headers: { 'Content-Type': 'application/json' }
     })
   }
 

@@ -46,9 +46,8 @@ class Intro extends Component {
   clickUser(user) {
     fetch('http://localhost:3000/messages?usernames=' + this.props.user.username + '+' + user)
       .then(res => res.json())
-      .then(messages => {
-        console.log(messages)
-        const loaded = messages.map(msg => {
+      .then(data => {
+        const loaded = data.messages.map(msg => {
           return { message: msg.message, username: msg.username }
         }).reverse()
         this.props.dispatch({
@@ -56,6 +55,10 @@ class Intro extends Component {
           payload: {
             messages: loaded
           }
+        })
+        this.props.dispatch({
+          type: 'ROOM_CHANGED',
+          payload: { room: data.room }
         })
         const messageContainer = document.querySelector('.message-container')
         messageContainer.scrollTop = messageContainer.scrollHeight
@@ -84,6 +87,10 @@ class Intro extends Component {
         </UserName>
         <div style={ margin }>
           <Username onClick={ () => this.clickUser('user1') } >user1</Username>
+          <Username onClick={ () => this.clickUser('user2') } >user2</Username>
+          <Username onClick={ () => this.clickUser('user3') } >user3</Username>
+          <Username onClick={ () => this.clickUser('user4') } >user4</Username>
+          <Username onClick={ () => this.clickUser('user5') } >user5</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
@@ -102,6 +109,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     userList: state.userList,
+    room: state.room,
     socket: state.socket
   }
 }

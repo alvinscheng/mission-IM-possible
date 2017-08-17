@@ -29,6 +29,7 @@ class Chat extends Component {
 
     if (this.props.socket) {
       this.props.socket.on('chat-message', msg => {
+        console.log(msg)
         this.props.dispatch({
           type: 'SENT_MESSAGE',
           payload: {
@@ -69,7 +70,8 @@ class Chat extends Component {
     const data = new FormData(event.target)
     const msg = {
       message: data.get('message'),
-      username: this.props.user.username
+      username: this.props.user.username,
+      roomId: this.props.room
     }
     this.props.socket.emit('chat-message', msg)
     this.props.dispatch({
@@ -114,6 +116,7 @@ const mapStateToProps = state => {
     messages: state.messages,
     user: state.user,
     chatInput: state.chatInput,
+    room: state.room,
     socket: state.socket
   }
 }

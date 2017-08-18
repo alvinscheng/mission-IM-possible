@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-const UserName = styled.div`
+const UserName = styled.li`
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -17,7 +17,6 @@ const Username = styled.div`
   margin: 5px;
   font-weight: bold;
 `
-const margin = { margin: '5px 5px 5px 10px' }
 
 class Intro extends Component {
   constructor(props) {
@@ -108,13 +107,13 @@ class Intro extends Component {
             X
           </button>
         </UserName>
-        <div style={ margin }>
-          <Username onClick={ () => this.clickUser('group') } >group</Username>
-          <Username onClick={ () => this.clickUser('user10') } >user10</Username>
-          <Username onClick={ () => this.clickUser('user20') } >user20</Username>
-          <Username onClick={ () => this.clickUser('user30') } >user30</Username>
-          <Username onClick={ () => this.clickUser('user40') } >user40</Username>
-          <Username onClick={ () => this.clickUser('user50') } >user50</Username>
+        <ul className='list-group'>
+          <Username className='list-group-item' onClick={ () => this.clickUser('group') } >Main</Username>
+          <Username className='list-group-item' onClick={ () => this.clickUser('user10') } >user10</Username>
+          <Username className='list-group-item' onClick={ () => this.clickUser('user20') } >user20</Username>
+          <Username className='list-group-item' onClick={ () => this.clickUser('user30') } >user30</Username>
+          <Username className='list-group-item' onClick={ () => this.clickUser('user40') } >user40</Username>
+          <Username className='list-group-item' onClick={ () => this.clickUser('user50') } >user50</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
@@ -123,7 +122,7 @@ class Intro extends Component {
               return <Username key={ i } onClick={ this.clickUser } value={ user }>{ user }</Username>
             })
           }
-        </div>
+        </ul>
       </div>
     )
   }

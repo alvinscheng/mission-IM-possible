@@ -204,7 +204,7 @@ describe('reducer', () => {
         chatInput: '',
         components: [],
         userList: [],
-        room: 'group',
+        room: 0,
         socket: {}
       }
       const action = {

@@ -47,10 +47,10 @@ class Chat extends Component {
       })
     }
     // fetch('https://stark-meadow-83882.herokuapp.com/messages')
-    fetch('http://localhost:3000/messages')
+    fetch('http://localhost:3000/messages?room=' + this.props.room)
       .then(res => res.json())
-      .then(messages => {
-        const loaded = messages.map(msg => {
+      .then(data => {
+        const loaded = data.messages.map(msg => {
           return { message: msg.message, username: msg.username }
         }).reverse()
         this.props.dispatch({

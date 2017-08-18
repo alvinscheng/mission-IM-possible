@@ -44,25 +44,48 @@ class Intro extends Component {
   }
 
   clickUser(user) {
-    fetch('http://localhost:3000/messages?usernames=' + this.props.user.username + '+' + user)
-      .then(res => res.json())
-      .then(data => {
-        const loaded = data.messages.map(msg => {
-          return { message: msg.message, username: msg.username }
-        }).reverse()
-        this.props.dispatch({
-          type: 'LOADED_MESSAGES',
-          payload: {
-            messages: loaded
-          }
+    if (user === 'group') {
+      fetch('http://localhost:3000/messages?room=0')
+        .then(res => res.json())
+        .then(data => {
+          const loaded = data.messages.map(msg => {
+            return { message: msg.message, username: msg.username }
+          }).reverse()
+          this.props.dispatch({
+            type: 'LOADED_MESSAGES',
+            payload: {
+              messages: loaded
+            }
+          })
+          this.props.dispatch({
+            type: 'ROOM_CHANGED',
+            payload: { room: data.room }
+          })
+          const messageContainer = document.querySelector('.message-container')
+          messageContainer.scrollTop = messageContainer.scrollHeight
         })
-        this.props.dispatch({
-          type: 'ROOM_CHANGED',
-          payload: { room: data.room }
+    }
+    else {
+      fetch('http://localhost:3000/messages?usernames=' + this.props.user.username + '+' + user)
+        .then(res => res.json())
+        .then(data => {
+          const loaded = data.messages.map(msg => {
+            return { message: msg.message, username: msg.username }
+          }).reverse()
+          this.props.dispatch({
+            type: 'LOADED_MESSAGES',
+            payload: {
+              messages: loaded
+            }
+          })
+          this.props.dispatch({
+            type: 'ROOM_CHANGED',
+            payload: { room: data.room }
+          })
+          const messageContainer = document.querySelector('.message-container')
+          messageContainer.scrollTop = messageContainer.scrollHeight
         })
-        const messageContainer = document.querySelector('.message-container')
-        messageContainer.scrollTop = messageContainer.scrollHeight
-      })
+    }
   }
 
   logOut() {
@@ -86,6 +109,7 @@ class Intro extends Component {
           </button>
         </UserName>
         <div style={ margin }>
+          <Username onClick={ () => this.clickUser('group') } >group</Username>
           <Username onClick={ () => this.clickUser('user10') } >user10</Username>
           <Username onClick={ () => this.clickUser('user20') } >user20</Username>
           <Username onClick={ () => this.clickUser('user30') } >user30</Username>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-const UserName = styled.div`
+const UserName = styled.li`
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -17,12 +17,17 @@ const Username = styled.div`
   margin: 5px;
   font-weight: bold;
 `
-const margin = { margin: '5px 5px 5px 10px' }
+
+const active = {
+  fontSize: '18px',
+  color: '#3498db'
+}
 
 class Intro extends Component {
   constructor(props) {
     super(props)
     this.logOut = this.logOut.bind(this)
+    this.clickUser = this.clickUser.bind(this)
   }
 
   componentDidMount() {
@@ -39,6 +44,56 @@ class Intro extends Component {
           payload: { user: username }
         })
       })
+    }
+  }
+
+  clickUser(user) {
+    if (user === 'group') {
+      this.props.dispatch({
+        type: 'ROOM_CHANGED',
+        payload: {
+          room: { room: 0, user: 'group' }
+        }
+      })
+      fetch('https://stark-meadow-83882.herokuapp.com/messages?room=0')
+        .then(res => res.json())
+        .then(data => {
+          const loaded = data.messages.map(msg => {
+            return { message: msg.message, username: msg.username }
+          }).reverse()
+          this.props.dispatch({
+            type: 'LOADED_MESSAGES',
+            payload: {
+              messages: loaded
+            }
+          })
+          const messageContainer = document.querySelector('.message-container')
+          messageContainer.scrollTop = messageContainer.scrollHeight
+        })
+    }
+    else {
+      fetch('https://stark-meadow-83882.herokuapp.com/messages?usernames=' + this.props.user.username + '+' + user)
+        .then(res => res.json())
+        .then(data => {
+          this.props.dispatch({
+            type: 'ROOM_CHANGED',
+            payload: {
+              room: { room: data.room, user }
+            }
+          })
+          const loaded = data.messages.map(msg => {
+            return { message: msg.message, username: msg.username }
+          }).reverse()
+          this.props.dispatch({
+            type: 'LOADED_MESSAGES',
+            payload: {
+              messages: loaded
+            }
+          })
+
+          const messageContainer = document.querySelector('.message-container')
+          messageContainer.scrollTop = messageContainer.scrollHeight
+        })
     }
   }
 
@@ -62,16 +117,28 @@ class Intro extends Component {
             X
           </button>
         </UserName>
-        <div style={ margin }>
+        <ul className='list-group'>
+          <Username
+            className='list-group-item'
+            onClick={ () => this.clickUser('group') }
+            style={ (this.props.room.user === 'group') ? active : null}
+          >Main</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
             })
             .map((user, i) => {
-              return <Username key={ i }>{ user }</Username>
+              return <Username
+                className='list-group-item'
+                key={ i }
+                onClick={ () => this.clickUser(user) }
+                style={ (this.props.room.user === user) ? active : null }
+              >
+                { user }
+              </Username>
             })
           }
-        </div>
+        </ul>
       </div>
     )
   }
@@ -81,6 +148,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     userList: state.userList,
+    room: state.room,
     socket: state.socket
   }
 }

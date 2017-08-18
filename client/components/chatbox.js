@@ -28,21 +28,27 @@ class Chat extends Component {
     const messageContainer = document.querySelector('.message-container')
 
     if (this.props.socket) {
-      this.props.socket.on('chat-message', msg => {
-        this.props.dispatch({
-          type: 'SENT_MESSAGE',
-          payload: {
-            username: msg.username,
-            message: msg.message
-          }
-        })
-        messageContainer.scrollTop = messageContainer.scrollHeight
+      this.props.socket.on('chat-message', () => {
+        fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
+          .then(res => res.json())
+          .then(data => {
+            const loaded = data.messages.map(msg => {
+              return { message: msg.message, username: msg.username }
+            }).reverse()
+            this.props.dispatch({
+              type: 'LOADED_MESSAGES',
+              payload: {
+                messages: loaded
+              }
+            })
+            messageContainer.scrollTop = messageContainer.scrollHeight
+          })
       })
     }
-    fetch('https://stark-meadow-83882.herokuapp.com/messages')
+    fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
       .then(res => res.json())
-      .then(messages => {
-        const loaded = messages.map(msg => {
+      .then(data => {
+        const loaded = data.messages.map(msg => {
           return { message: msg.message, username: msg.username }
         }).reverse()
         this.props.dispatch({
@@ -68,7 +74,8 @@ class Chat extends Component {
     const data = new FormData(event.target)
     const msg = {
       message: data.get('message'),
-      username: this.props.user.username
+      username: this.props.user.username,
+      roomId: this.props.room.room
     }
     this.props.socket.emit('chat-message', msg)
     this.props.dispatch({
@@ -112,6 +119,7 @@ const mapStateToProps = state => {
     messages: state.messages,
     user: state.user,
     chatInput: state.chatInput,
+    room: state.room,
     socket: state.socket
   }
 }

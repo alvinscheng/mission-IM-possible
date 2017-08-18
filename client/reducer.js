@@ -2,8 +2,6 @@ import { combineReducers } from 'redux'
 
 function messages(state = [], action) {
   switch (action.type) {
-    case 'SENT_MESSAGE':
-      return [...state, { message: action.payload.message, username: action.payload.username }]
     case 'LOADED_MESSAGES':
       return action.payload.messages
     default:
@@ -51,6 +49,13 @@ function userList(state = [], action) {
   }
 }
 
+function room(state = { room: 0, user: 'group' }, action) {
+  switch (action.type) {
+    case 'ROOM_CHANGED': return action.payload.room
+    default: return state
+  }
+}
+
 function socket(state = {}, action) {
   switch (action.type) {
     case 'SOCKET_CONNECTED': return action.payload.socket
@@ -64,6 +69,7 @@ const reducer = combineReducers({
   chatInput,
   components,
   userList,
+  room,
   socket
 })
 

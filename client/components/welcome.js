@@ -3,24 +3,23 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 const UserName = styled.li`
-  display: flex;
+  display: block;
   justify-content: space-between;
   padding: 10px;
-  background-color: #3498db;
-  color: #ecf0f1;
+  color: #7f8c8d;
+  border-bottom: 1px solid #bdc3c7;
   text-align: left;
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 14px;
 `
 const Username = styled.div`
   font-size: 14px;
-  margin: 5px;
   font-weight: bold;
 `
 
 const active = {
-  fontSize: '18px',
-  color: '#3498db'
+  backgroundColor: '#3498db',
+  color: '#ecf0f1',
+  margin: '0'
 }
 
 class Intro extends Component {
@@ -108,13 +107,15 @@ class Intro extends Component {
     return (
       <div>
         <UserName>
-          { this.props.user.username }
+          <div>
+            Hello, { this.props.user.username }
+          </div>
           <button
             type='button'
-            className='btn btn-mini btn-negative'
+            className='btn btn-mini btn-default'
             onClick={ this.logOut }
           >
-            X
+            Log out
           </button>
         </UserName>
         <ul className='list-group'>

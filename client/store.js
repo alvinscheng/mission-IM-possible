@@ -20,7 +20,7 @@ function createConnection() {
 const store = createStore(reducer, {
   components: [],
   user: { token, username, isLoggedIn },
-  room: 0,
+  room: { room: 0, user: 'group' },
   socket: (isLoggedIn ? createConnection() : {})
 })
 

@@ -51,9 +51,11 @@ class Intro extends Component {
     if (user === 'group') {
       this.props.dispatch({
         type: 'ROOM_CHANGED',
-        payload: { room: 0 }
+        payload: {
+          room: { room: 0, user: 'group' }
+        }
       })
-      fetch('http://localhost:3000/messages?room=0')
+      fetch('https://stark-meadow-83882.herokuapp.com/messages?room=0')
         .then(res => res.json())
         .then(data => {
           const loaded = data.messages.map(msg => {
@@ -70,9 +72,15 @@ class Intro extends Component {
         })
     }
     else {
-      fetch('http://localhost:3000/messages?usernames=' + this.props.user.username + '+' + user)
+      fetch('https://stark-meadow-83882.herokuapp.com/messages?usernames=' + this.props.user.username + '+' + user)
         .then(res => res.json())
         .then(data => {
+          this.props.dispatch({
+            type: 'ROOM_CHANGED',
+            payload: {
+              room: { room: data.room, user }
+            }
+          })
           const loaded = data.messages.map(msg => {
             return { message: msg.message, username: msg.username }
           }).reverse()
@@ -82,10 +90,7 @@ class Intro extends Component {
               messages: loaded
             }
           })
-          this.props.dispatch({
-            type: 'ROOM_CHANGED',
-            payload: { room: data.room }
-          })
+
           const messageContainer = document.querySelector('.message-container')
           messageContainer.scrollTop = messageContainer.scrollHeight
         })
@@ -116,19 +121,19 @@ class Intro extends Component {
           <Username
             className='list-group-item'
             onClick={ () => this.clickUser('group') }
-            style={ (this.props.room === 0) ? active : null}
+            style={ (this.props.room.user === 'group') ? active : null}
           >Main</Username>
-          <Username className='list-group-item' onClick={ () => this.clickUser('user10') } style={ (this.props.room === 1) ? active : null}>user10</Username>
-          <Username className='list-group-item' onClick={ () => this.clickUser('user20') } style={ (this.props.room === 2) ? active : null}>user20</Username>
-          <Username className='list-group-item' onClick={ () => this.clickUser('user30') } style={ (this.props.room === 3) ? active : null}>user30</Username>
-          <Username className='list-group-item' onClick={ () => this.clickUser('user40') } style={ (this.props.room === 4) ? active : null}>user40</Username>
-          <Username className='list-group-item' onClick={ () => this.clickUser('user50') } style={ (this.props.room === 5) ? active : null}>user50</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
             })
             .map((user, i) => {
-              return <Username className='list-group-item' onClick={ () => this.clickUser(user) } key={ i }>
+              return <Username
+                className='list-group-item'
+                key={ i }
+                onClick={ () => this.clickUser(user) }
+                style={ (this.props.room.user === user) ? active : null }
+              >
                 { user }
               </Username>
             })

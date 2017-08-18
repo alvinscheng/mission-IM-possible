@@ -204,15 +204,19 @@ describe('reducer', () => {
         chatInput: '',
         components: [],
         userList: [],
-        room: 0,
+        room: { room: 0, user: 'group' },
         socket: {}
       }
       const action = {
         type: 'ROOM_CHANGED',
-        payload: { room: 1 }
+        payload: {
+          room: { room: 1, user: 'user1' }
+        }
       }
       const newState = reducer(oldState, action)
-      expect(newState.room).to.equal(1)
+      expect(newState.room.room).to.equal(1)
+      expect(newState.room.user).to.equal('user1')
+
     })
   })
 

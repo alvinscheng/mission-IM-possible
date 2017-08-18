@@ -49,7 +49,7 @@ function userList(state = [], action) {
   }
 }
 
-function room(state = '', action) {
+function room(state = { room: 0, user: 'group' }, action) {
   switch (action.type) {
     case 'ROOM_CHANGED': return action.payload.room
     default: return state

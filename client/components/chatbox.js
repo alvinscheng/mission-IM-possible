@@ -29,8 +29,7 @@ class Chat extends Component {
 
     if (this.props.socket) {
       this.props.socket.on('chat-message', () => {
-        // fetch('https://stark-meadow-83882.herokuapp.com/messages')
-        fetch('http://localhost:3000/messages?room=' + this.props.room)
+        fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
           .then(res => res.json())
           .then(data => {
             const loaded = data.messages.map(msg => {
@@ -46,8 +45,7 @@ class Chat extends Component {
           })
       })
     }
-    // fetch('https://stark-meadow-83882.herokuapp.com/messages')
-    fetch('http://localhost:3000/messages?room=' + this.props.room)
+    fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
       .then(res => res.json())
       .then(data => {
         const loaded = data.messages.map(msg => {
@@ -77,15 +75,14 @@ class Chat extends Component {
     const msg = {
       message: data.get('message'),
       username: this.props.user.username,
-      roomId: this.props.room
+      roomId: this.props.room.room
     }
     this.props.socket.emit('chat-message', msg)
     this.props.dispatch({
       type: 'TYPED_MESSAGE',
       payload: { message: '' }
     })
-    // fetch('https://stark-meadow-83882.herokuapp.com/messages', {
-    fetch('http://localhost:3000/messages', {
+    fetch('https://stark-meadow-83882.herokuapp.com/messages', {
       method: 'POST',
       body: JSON.stringify(msg),
       headers: { 'Content-Type': 'application/json' }

@@ -4,30 +4,6 @@ import { expect } from 'chai'
 
 describe('reducer', () => {
 
-  describe('SENT_MESSAGE', () => {
-    it('Adds a new message to the chat', () => {
-      const oldState = {
-        messages: [],
-        user: {
-          username: '',
-          token: '',
-          isLoggedIn: false
-        },
-        chatInput: '',
-        components: []
-      }
-      const action = {
-        type: 'SENT_MESSAGE',
-        payload: {
-          message: 'Hello World',
-          username: 'user1'
-        }
-      }
-      const newState = reducer(oldState, action)
-      expect(newState.messages).to.be.an('array').with.length.above(0)
-    })
-  })
-
   describe('LOADED_MESSAGES', () => {
     it('Loads all messages to the chat', () => {
       const oldState = {
@@ -216,6 +192,30 @@ describe('reducer', () => {
     })
   })
 
+  describe('ROOM_CHANGED', () => {
+    it('changes the room', () => {
+      const oldState = {
+        messages: [],
+        user: {
+          username: '',
+          token: '',
+          isLoggedIn: false
+        },
+        chatInput: '',
+        components: [],
+        userList: [],
+        room: 'group',
+        socket: {}
+      }
+      const action = {
+        type: 'ROOM_CHANGED',
+        payload: { room: 1 }
+      }
+      const newState = reducer(oldState, action)
+      expect(newState.room).to.equal(1)
+    })
+  })
+
   describe('SOCKET_CONNECTED', () => {
     it('connects a socket', () => {
       const oldState = {
@@ -251,6 +251,7 @@ describe('reducer', () => {
         chatInput: '',
         components: [],
         userList: [],
+        room: 'group',
         socket: {}
       }
       const action = { type: 'DEFAULT' }

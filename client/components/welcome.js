@@ -42,6 +42,14 @@ class Intro extends Component {
           type: 'REMOVED_USER',
           payload: { user: username }
         })
+        if (this.props.room.user === username) {
+          this.props.dispatch({
+            type: 'ROOM_CHANGED',
+            payload: {
+              room: { room: 0, user: 'group' }
+            }
+          })
+        }
       })
     }
   }

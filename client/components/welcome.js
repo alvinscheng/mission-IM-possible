@@ -49,6 +49,21 @@ class Intro extends Component {
               room: { room: 0, user: 'group' }
             }
           })
+          const messageContainer = document.querySelector('.message-container')
+          fetch('https://stark-meadow-83882.herokuapp.com/messages?room=0')
+            .then(res => res.json())
+            .then(data => {
+              const loaded = data.messages.map(msg => {
+                return { message: msg.message, username: msg.username }
+              }).reverse()
+              this.props.dispatch({
+                type: 'LOADED_MESSAGES',
+                payload: {
+                  messages: loaded
+                }
+              })
+              messageContainer.scrollTop = messageContainer.scrollHeight
+            })
         }
       })
     }

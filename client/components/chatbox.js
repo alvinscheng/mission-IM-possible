@@ -22,43 +22,16 @@ class Chat extends Component {
     super(props)
     this.sendMessage = this.sendMessage.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.getMessagesByRoom = this.getMessagesByRoom.bind(this)
   }
 
   componentDidMount() {
-    const messageContainer = document.querySelector('.message-container')
-
     if (this.props.socket) {
       this.props.socket.on('chat-message', () => {
-        fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
-          .then(res => res.json())
-          .then(data => {
-            const loaded = data.messages.map(msg => {
-              return { message: msg.message, username: msg.username }
-            }).reverse()
-            this.props.dispatch({
-              type: 'LOADED_MESSAGES',
-              payload: {
-                messages: loaded
-              }
-            })
-            messageContainer.scrollTop = messageContainer.scrollHeight
-          })
+        this.getMessagesByRoom(this.props.room.room)
       })
     }
-    fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + this.props.room.room)
-      .then(res => res.json())
-      .then(data => {
-        const loaded = data.messages.map(msg => {
-          return { message: msg.message, username: msg.username }
-        }).reverse()
-        this.props.dispatch({
-          type: 'LOADED_MESSAGES',
-          payload: {
-            messages: loaded
-          }
-        })
-        messageContainer.scrollTop = messageContainer.scrollHeight
-      })
+    this.getMessagesByRoom(this.props.room.room)
   }
 
   handleChange(event) {
@@ -87,6 +60,24 @@ class Chat extends Component {
       body: JSON.stringify(msg),
       headers: { 'Content-Type': 'application/json' }
     })
+  }
+
+  getMessagesByRoom(room) {
+    const messageContainer = document.querySelector('.message-container')
+    fetch('https://stark-meadow-83882.herokuapp.com/messages?room=' + room)
+      .then(res => res.json())
+      .then(data => {
+        const loaded = data.messages.map(msg => {
+          return { message: msg.message, username: msg.username }
+        }).reverse()
+        this.props.dispatch({
+          type: 'LOADED_MESSAGES',
+          payload: {
+            messages: loaded
+          }
+        })
+        messageContainer.scrollTop = messageContainer.scrollHeight
+      })
   }
 
   render() {

@@ -86,11 +86,11 @@ class Intro extends Component {
           </button>
         </UserName>
         <div style={ margin }>
-          <Username onClick={ () => this.clickUser('user1') } >user1</Username>
-          <Username onClick={ () => this.clickUser('user2') } >user2</Username>
-          <Username onClick={ () => this.clickUser('user3') } >user3</Username>
-          <Username onClick={ () => this.clickUser('user4') } >user4</Username>
-          <Username onClick={ () => this.clickUser('user5') } >user5</Username>
+          <Username onClick={ () => this.clickUser('user10') } >user10</Username>
+          <Username onClick={ () => this.clickUser('user20') } >user20</Username>
+          <Username onClick={ () => this.clickUser('user30') } >user30</Username>
+          <Username onClick={ () => this.clickUser('user40') } >user40</Username>
+          <Username onClick={ () => this.clickUser('user50') } >user50</Username>
           {
             this.props.userList.filter(user => {
               return user !== this.props.user.username
